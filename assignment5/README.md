@@ -1,7 +1,7 @@
 ## Week 5 assignment
 
-__assignment5__ (pdf or rmd) for solved exercises.
+* <code>assignment5</code> (pdf or rmd) for solved exercises.
 
-__questions5__ for assignment questions.
+* <code>questions5</code> for assignment questions.
 
-__solutions5__ for solutions provided by the professor.
+* <code>solutions5</code> for solutions provided by the professor.
