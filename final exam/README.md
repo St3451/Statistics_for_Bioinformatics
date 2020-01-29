@@ -2,4 +2,4 @@
 
 __final_exam__ (pdf or rmd) for solved exercises.
 
-__text__ for assignment questions. 
+__text__ for final exam questions. 
