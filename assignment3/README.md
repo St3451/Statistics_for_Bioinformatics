@@ -1,7 +1,7 @@
 ## Week 3 assignment
 
-__Assignment3__ for solved exercises.
+__assignment3__ for solved exercises.
 
-__Text3__ for assignment questions.
+__text3__ for assignment questions.
 
-__Solutions3__.
+__solutions3__.
