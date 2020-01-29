@@ -1,7 +1,7 @@
 ## Week 5 assignment
 
-__Assignment5__ for solved exercises.
+__assignment5__ for solved exercises.
 
-__Text5__ for assignment questions.
+__text5__ for assignment questions.
 
-__Solutions5__.
+__solutions5__.
