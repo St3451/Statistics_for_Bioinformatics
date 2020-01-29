@@ -2,6 +2,6 @@
 
 Assignment1: solved questions.
 
-Text: assignment questions.
+Text1: assignment questions.
 
-Solutions1: solutions.
+Solutions1.
