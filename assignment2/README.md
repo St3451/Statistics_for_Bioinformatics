@@ -4,4 +4,4 @@ __assignment2__ (pdf or rmd) for solved exercises.
 
 __questions2__ for assignment questions.
 
-__solutions1__ for the solutions provided by the professor.
+__solutions2__ for the solutions provided by the professor.
