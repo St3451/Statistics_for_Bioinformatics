@@ -1,7 +1,7 @@
 ## Week 1 assignment
 
-<code>assignment1</code> (pdf or rmd) for solved exercises.
+* <code>assignment1</code> (pdf or rmd) for solved exercises.
 
-<code>questions1</code> for assignment questions.
+* <code>questions1</code> for assignment questions.
 
-<code>solutions1</code> for solutions provided by the professor.
+* <code>solutions1</code> for solutions provided by the professor.
