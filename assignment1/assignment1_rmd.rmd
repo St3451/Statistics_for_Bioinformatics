@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1"
-output: rmarkdown::github_document
+output: pdf_document
 ---
 
 # 1 Blood types genetics
