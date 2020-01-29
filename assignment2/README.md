@@ -1,7 +1,7 @@
 ## Week 2 assignment
 
-__assignment2__ (pdf or rmd) for solved exercises.
+* <code>assignment2</code> (pdf or rmd) for solved exercises.
 
-__questions2__ for assignment questions.
+* <code>questions2</code> for assignment questions.
 
-__solutions2__ for solutions provided by the professor.
+* <code>solutions2</code> for solutions provided by the professor.
