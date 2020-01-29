@@ -1,6 +1,6 @@
 ## Week 1 assignment
 
-__Assignment1__ for solved questions.
+__Assignment1__ for solved exercises.
 
 __Text1__ for assignment questions.
 
