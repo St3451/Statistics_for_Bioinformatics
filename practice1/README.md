@@ -3,3 +3,5 @@
 __practice1__ (pdf or rmd) for solved exercises.
 
 __questions_p1__ for practice exam questions. 
+
+__solutions_p1__ for solutions provided by the professor.
