@@ -1,7 +1,7 @@
 ## Week 2 assignment
 
-__Assignment2__ for solved exercises.
+__assignment2__ for solved exercises.
 
-__Text2__ for assignment questions.
+__text2__ for assignment questions.
 
-__Solutions2__.
+__solutions2__.
