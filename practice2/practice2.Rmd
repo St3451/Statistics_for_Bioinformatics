@@ -1,7 +1,8 @@
 ---
 title: "Practice 2 (partially completed)"
-output: pdf_document
-
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 
 ```{r load myData, include=FALSE}

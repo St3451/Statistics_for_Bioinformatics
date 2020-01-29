@@ -1,6 +1,8 @@
 ---
 title: "Assignment 4"
-output: pdf_document
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 # Ex 1
 
