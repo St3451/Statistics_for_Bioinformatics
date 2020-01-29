@@ -1,7 +1,7 @@
 ## Week 4 assignment
 
-__Assignment4__ for solved exercises.
+__assignment4__ for solved exercises.
 
-__Text4__ for assignment questions.
+__text4__ for assignment questions.
 
-__Solutions4__.
+__solutions4__.
