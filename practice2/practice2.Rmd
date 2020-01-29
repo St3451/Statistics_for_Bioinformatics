@@ -1,8 +1,7 @@
 ---
-title: "Practice 2"
-author: "Stefano Pellegrini"
-date: "1/14/2020"
+title: "Practice 2 (partially completed)"
 output: pdf_document
+
 ---
 
 ```{r load myData, include=FALSE}
@@ -176,13 +175,13 @@ mll.mixture <- gaussmix_mll(data = quakes$long, par = par.est_gaussmix)
 mll.gauss <- (-sum(dnorm(x = quakes$long, mean = mu, sd = sigma, log = TRUE)))
 
 # AIC
-aic.mixture <- 2 * mll.mixture + 2 * length(par.est)
+aic.mixture <- 2 * mll.mixture + 2 * length(par.est_gaussmix)
 aic.gauss <- 2 * mll.gauss + 2 * 2
 c(aic.mixture, aic.gauss)
 
 # BIC
 n <- nrow(quakes)
-bic.mixture <- 2 * mll.mixture + length(par.est) * log(n)
+bic.mixture <- 2 * mll.mixture + length(par.est_gaussmix) * log(n)
 bic.gauss <- 2 * mll.gauss + 2 * log(n)
 c(mixture = bic.mixture, gauss = bic.gauss)
 ```

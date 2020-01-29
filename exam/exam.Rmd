@@ -1,9 +1,10 @@
 ---
-title: "Exam"
-author: 
-date: "1/15/2020"
-output: pdf_document
+title: "Final exam"
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
+
 ```{r load myData, include=FALSE}
 load("exam1920.RData")
 ```

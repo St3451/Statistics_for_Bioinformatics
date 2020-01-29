@@ -1,9 +1,9 @@
 Assignment 3
 ================
 
-\#1 A Trignonometric Density \#\#\#Ex 1.0 How can you compute the
-normalization of
-![C\_{k}](https://latex.codecogs.com/png.latex?C_%7Bk%7D "C_{k}")?
+# 1 A Trignonometric Density
+
+### Ex 1.0 How can you compute the normalization of ![C\_{k}](https://latex.codecogs.com/png.latex?C_%7Bk%7D "C_{k}")?
 
   
 ![f(x|k) =
@@ -52,8 +52,7 @@ dx}}{sin(x)^{k}}
 ](https://latex.codecogs.com/png.latex?C_%7Bk%7D%20%3D%20%5Cfrac%7B1%7D%7B%5Cint_0%5E%5Cpi%5C%21sin%28x%29%5E%7Bk%7D%20dx%7D%20
 "C_{k} = \\frac{1}{\\int_0^\\pi\\!sin(x)^{k} dx} ")  
 
-\#\#\#Ex 1.1 The model is parametric? Which are the parameters of the
-model?
+### Ex 1.1 The model is parametric? Which are the parameters of the model?
 
 Yes, the model is parametric. It has one parameter which is
 ![k](https://latex.codecogs.com/png.latex?k
@@ -86,8 +85,7 @@ dSinKMLL <- function(k, xvals) {
 }
 ```
 
-\#\#\#Ex 1.3 Use numerical optimization method to find the maximum
-likelihood estimator.
+### Ex 1.3 Use numerical optimization method to find the maximum likelihood estimator.
 
 ``` r
 optimize(f = dSinKMLL, xvals = angles, interval = c(0, 50))
@@ -99,8 +97,7 @@ optimize(f = dSinKMLL, xvals = angles, interval = c(0, 50))
     ## $objective
     ## [1] 158.3675
 
-\#\#\#Ex 1.4 Plot the histogram of the data and the density
-corresponding to the MLE.
+### Ex 1.4 Plot the histogram of the data and the density corresponding to the MLE.
 
 ``` r
 hist(
@@ -115,11 +112,9 @@ curve(dSinK(x, k = minK), add = TRUE, col = "blue")
 
 ![](assignment3_rmd_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-\#2 A case study of neuronal data \#\#\#Ex 2.1 If we assume the ISI
-observations are i.i.d. following an exponential distribution with
-parameter ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
-"\\lambda"). Compute the maximum likelihood estimate of
-![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda").
+# 2 A case study of neuronal data
+
+### Ex 2.1 If we assume the ISI observations are i.i.d. following an exponential distribution with parameter ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda"). Compute the maximum likelihood estimate of ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda").
 
 If we assume the ISI data follows an exponential distribution with
 parameter ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
@@ -161,13 +156,7 @@ lambda <- 1/ISImean
 
     ## [1] "Lambda = 1.14689142797908"
 
-\#\#\#Ex 2.2 Assume now that the ISI observations are i.i.d. following a
-gamma distribution with parameters
-![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha")
-(shape) and ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta
-"\\beta") (rate), find the MLE estimates of the parameters
-![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha") and
-![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\\beta").
+### Ex 2.2 Assume now that the ISI observations are i.i.d. following a gamma distribution with parameters ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha") (shape) and ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\\beta") (rate), find the MLE estimates of the parameters ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha") and ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\\beta").
 
 ``` r
 gammaMLH <- function(parameters, xvals){
@@ -181,11 +170,9 @@ parametersGamma <- optim(par = c(1, 1), fn = gammaMLH, xvals = isidata)$par
 
     ## [1] "Beta = 1.79165490720006"
 
-\#\#\#Ex 2.3 Try to find the method of moments estimator of
-![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha") and
-![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\\beta"). The
-method of moments can be used to find the first estimation to initialize
-the MLE iterative algorithm. We know that:   
+### Ex 2.3 Try to find the method of moments estimator of ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha") and ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\\beta"). The method of moments can be used to find the first estimation to initialize the MLE iterative algorithm.
+
+We know that:   
 ![E(X)=\\frac{\\alpha}{\\beta}\\ \\text{and} \\
 V(X)=\\frac{\\alpha}{\\beta^2}](https://latex.codecogs.com/png.latex?E%28X%29%3D%5Cfrac%7B%5Calpha%7D%7B%5Cbeta%7D%5C%20%5Ctext%7Band%7D%20%5C%20V%28X%29%3D%5Cfrac%7B%5Calpha%7D%7B%5Cbeta%5E2%7D
 "E(X)=\\frac{\\alpha}{\\beta}\\ \\text{and} \\ V(X)=\\frac{\\alpha}{\\beta^2}")  
@@ -221,8 +208,11 @@ alpha_estimator <- mean(isidata)*beta_estimator
 
     ## [1] 1.283954
 
-\#\#Ex 3 \#\#\#Ex 3.1 Write (analytically) the formula for the
-log-likelihood given n i.i.d. observations.   
+## Ex 3
+
+### Ex 3.1 Write (analytically) the formula for the log-likelihood given n i.i.d. observations.
+
+  
 ![f(x|\\mu,\\lambda)=\\frac{\\lambda}{2\\pi
 x^3}exp(\\frac{-\\lambda(x-\\mu)^2}{2\\mu^2x})](https://latex.codecogs.com/png.latex?f%28x%7C%5Cmu%2C%5Clambda%29%3D%5Cfrac%7B%5Clambda%7D%7B2%5Cpi%20x%5E3%7Dexp%28%5Cfrac%7B-%5Clambda%28x-%5Cmu%29%5E2%7D%7B2%5Cmu%5E2x%7D%29
 "f(x|\\mu,\\lambda)=\\frac{\\lambda}{2\\pi x^3}exp(\\frac{-\\lambda(x-\\mu)^2}{2\\mu^2x})")  
@@ -243,19 +233,11 @@ X\_i^3+\\sum\_{i=1}^n\\frac{-\\lambda(x-\\mu)^2}{2\\mu^2x}](https://latex.codeco
 X\_i^3+\\frac{\\lambda}{2}\\sum\_{i=1}^n\\frac{(X\_i-\\mu)^2}{\\mu^2X\_i}](https://latex.codecogs.com/png.latex?%5Cell_n%28%5Cmu%2C%5Clambda%29%3D%5Cfrac%7Bn%7D%7B2%7Dln%5Clambda-%5Csum_%7Bi%3D1%7D%5Enln2%5Cpi%20X_i%5E3%2B%5Cfrac%7B%5Clambda%7D%7B2%7D%5Csum_%7Bi%3D1%7D%5En%5Cfrac%7B%28X_i-%5Cmu%29%5E2%7D%7B%5Cmu%5E2X_i%7D
 "\\ell_n(\\mu,\\lambda)=\\frac{n}{2}ln\\lambda-\\sum_{i=1}^nln2\\pi X_i^3+\\frac{\\lambda}{2}\\sum_{i=1}^n\\frac{(X_i-\\mu)^2}{\\mu^2X_i}")  
 
-\#\#\#Ex 3.2 Try to derive the formula for the maximum likelihood
-estimators for ![\\mu](https://latex.codecogs.com/png.latex?%5Cmu
-"\\mu") and ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
-"\\lambda")
+### Ex 3.2 Try to derive the formula for the maximum likelihood estimators for ![\\mu](https://latex.codecogs.com/png.latex?%5Cmu "\\mu") and ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda")
 
-\#\#\#Ex 3.3 Apply the MLE estimators in the previous step to the
-experimental ISI data, that is calculate the theoretical estimates of
-![\\mu](https://latex.codecogs.com/png.latex?%5Cmu "\\mu") and
-![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda")
-for the ISI data.
+### Ex 3.3 Apply the MLE estimators in the previous step to the experimental ISI data, that is calculate the theoretical estimates of ![\\mu](https://latex.codecogs.com/png.latex?%5Cmu "\\mu") and ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda") for the ISI data.
 
-\#\#\#Ex3.4 Find the maximum likelihood estimators using numerical
-methods.
+### Ex3.4 Find the maximum likelihood estimators using numerical methods.
 
 ``` r
 dInvNorm <- function(x, mu, lambda, lg = FALSE){
@@ -278,8 +260,7 @@ parametersinvNorm <- optim(par = c(1, 1), fn = invNormMLH, xvals = isidata)$par
 
     ## [1] "Lambda = 0.867973616707968"
 
-\#Ex 3.5 Plot the estimated inverse Gaussian density on top of the
-histogram of the ISI data and with the kernel density estimation.
+# Ex 3.5 Plot the estimated inverse Gaussian density on top of the histogram of the ISI data and with the kernel density estimation.
 
 ``` r
 hist(
@@ -293,9 +274,9 @@ curve(dInvNorm(x, parametersinvNorm[1], parametersinvNorm[2]), col = "blue", add
 
 ![](assignment3_rmd_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-\#3 Brain cell dataset \#\#\#Ex 4.1 Find numerically the MLE estimates
-of the parameters of the log-normal distribution for the ramp spike time
-observations.
+# 3 Brain cell dataset
+
+### Ex 4.1 Find numerically the MLE estimates of the parameters of the log-normal distribution for the ramp spike time observations.
 
 ``` r
 dlnormMLL <- function(parameters, xvals){
@@ -309,10 +290,7 @@ parametersDlnorm <- optim(par = c(1, 1), fn = dlnormMLL, xvals = rampSpike)$par
 
     ## [1] "SDlog =  0.605661842011454"
 
-\#\#\#Ex 4.2 Transform the ramp spike time observations using the
-logarithm and then obtain the MLE of the parameters for a Gaussian
-distribution using the transformed data. Check that the results you
-obtain are equal to the MLE estimates obtained numerically in point 4.1.
+### Ex 4.2 Transform the ramp spike time observations using the logarithm and then obtain the MLE of the parameters for a Gaussian distribution using the transformed data. Check that the results you obtain are equal to the MLE estimates obtained numerically in point 4.1.
 
 ``` r
 logRampSpike <- log(rampSpike)
@@ -328,10 +306,7 @@ parametersDnorm <- optim(par = c(1, 1), fn = dnormMLL, xvals = logRampSpike)$par
 
     ## [1] "SD = 0.605623564290239"
 
-\#\#\#Ex 4.3 Find now the MLE estimates for the parameters of the
-log-normal distribution using only the male human observations and the
-female human observations. Plot the two obtained log-normal densities in
-the same plot.
+### Ex 4.3 Find now the MLE estimates for the parameters of the log-normal distribution using only the male human observations and the female human observations. Plot the two obtained log-normal densities in the same plot.
 
 ``` r
 parametersDlnormMale <- optim(par = c(1, 1), fn = dlnormMLL, 
@@ -348,7 +323,9 @@ legend("topright",legend = c("Male", "Female"), col = c("blue", "red"), lty = c(
 
 ![](assignment3_rmd_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
-\#4 Molecular evolution, Jukes-Cantor model \#\#\#Ex 5.1
+# 4 Molecular evolution, Jukes-Cantor model
+
+### Ex 5.1
 
 ``` r
 JKprob <- function(X, Y, alpha, t=1000){
@@ -390,11 +367,10 @@ legend(
 
 ![](assignment3_rmd_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
-\#\#\#Ex 5.2 Write the log-likelihood function for the observations as a
-function of ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha
-"\\alpha"). Our observations are
-![n](https://latex.codecogs.com/png.latex?n "n") pairs of i.i.d
-nucleotides:   
+### Ex 5.2 Write the log-likelihood function for the observations as a function of ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha").
+
+Our observations are ![n](https://latex.codecogs.com/png.latex?n "n")
+pairs of i.i.d nucleotides:   
 ![(X\_i,Y\_i),...,(X\_n,
 Y\_n)](https://latex.codecogs.com/png.latex?%28X_i%2CY_i%29%2C...%2C%28X_n%2C%20Y_n%29
 "(X_i,Y_i),...,(X_n, Y_n)")  
@@ -459,10 +435,9 @@ t))+n\_2log(0.25(0.25-0.25exp(-4\\alpha
 t))](https://latex.codecogs.com/png.latex?%5Cell_n%28%5Calpha%29%3Dn_1log%280.25%280.25%2B0.75exp%28-4%5Calpha%20t%29%29%2Bn_2log%280.25%280.25-0.25exp%28-4%5Calpha%20t%29%29
 "\\ell_n(\\alpha)=n_1log(0.25(0.25+0.75exp(-4\\alpha t))+n_2log(0.25(0.25-0.25exp(-4\\alpha t))")  
 
-\#\#\#Ex 5.3 Try to find the theoretical maximum likelihood estimator
-for ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha").
+### Ex 5.3 Try to find the theoretical maximum likelihood estimator for ![\\alpha](https://latex.codecogs.com/png.latex?%5Calpha "\\alpha").
 
-\#\#\#Ex 5.4 Try to implement the Jukes-Cantor model in R:
+### Ex 5.4 Try to implement the Jukes-Cantor model in R:
 
 ``` r
 #Implement probability function

@@ -1,6 +1,8 @@
 ---
 title: "Assignment 1"
-output: pdf_document
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 
 # 1 Blood types genetics
@@ -86,7 +88,7 @@ for(i in 1:1000){
   secondGen[i] <- C
 }
 
-secondGen
+head(secondGen, 50)
 ```
 
 # 2 A case study of DNA sequence

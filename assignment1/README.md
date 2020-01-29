@@ -74,13 +74,13 @@ for(i in 1:1000){
 sum(offspingiAiA == "ii")/length(offspingiAiA)
 ```
 
-    ## [1] 0.241
+    ## [1] 0.257
 
 ``` r
 sum(offspingiAiA != "AA")/length(offspingiAiA)
 ```
 
-    ## [1] 0.743
+    ## [1] 0.733
 
 ### Ex 2.4
 
@@ -94,152 +94,17 @@ for(i in 1:1000){
   secondGen[i] <- C
 }
 
-secondGen
+head(secondGen, 50)
 ```
 
-    ##    [1] "Type A"  "Type A"  "Type A"  "Type B"  "Type B"  "Type B"  "Type AB"
-    ##    [8] "Type A"  "Type A"  "Type B"  "Type A"  "Type A"  "Type B"  "Type AB"
-    ##   [15] "Type B"  "Type AB" "Type A"  "Type A"  "Type A"  "Type AB" "Type AB"
-    ##   [22] "Type A"  "Type A"  "Type B"  "Type AB" "Type AB" "Type B"  "Type A" 
-    ##   [29] "Type AB" "Type A"  "Type B"  "Type B"  "Type A"  "Type B"  "Type A" 
-    ##   [36] "Type AB" "Type B"  "Type A"  "Type A"  "Type B"  "Type AB" "Type A" 
-    ##   [43] "Type A"  "Type B"  "Type B"  "Type AB" "Type B"  "Type AB" "Type AB"
-    ##   [50] "Type AB" "Type B"  "Type AB" "Type A"  "Type B"  "Type A"  "Type B" 
-    ##   [57] "Type B"  "Type B"  "Type B"  "Type B"  "Type B"  "Type A"  "Type AB"
-    ##   [64] "Type B"  "Type AB" "Type A"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##   [71] "Type AB" "Type A"  "Type A"  "Type AB" "Type AB" "Type AB" "Type A" 
-    ##   [78] "Type A"  "Type AB" "Type A"  "Type B"  "Type A"  "Type A"  "Type A" 
-    ##   [85] "Type B"  "Type B"  "Type B"  "Type B"  "Type A"  "Type AB" "Type A" 
-    ##   [92] "Type B"  "Type A"  "Type B"  "Type A"  "Type A"  "Type A"  "Type AB"
-    ##   [99] "Type B"  "Type B"  "Type B"  "Type A"  "Type A"  "Type A"  "Type B" 
-    ##  [106] "Type A"  "Type B"  "Type B"  "Type A"  "Type AB" "Type A"  "Type A" 
-    ##  [113] "Type A"  "Type B"  "Type AB" "Type B"  "Type A"  "Type B"  "Type A" 
-    ##  [120] "Type B"  "Type B"  "Type AB" "Type B"  "Type A"  "Type B"  "Type A" 
-    ##  [127] "Type A"  "Type AB" "Type AB" "Type B"  "Type B"  "Type A"  "Type A" 
-    ##  [134] "Type AB" "Type A"  "Type A"  "Type AB" "Type AB" "Type B"  "Type AB"
-    ##  [141] "Type B"  "Type B"  "Type A"  "Type A"  "Type A"  "Type B"  "Type A" 
-    ##  [148] "Type A"  "Type B"  "Type A"  "Type AB" "Type B"  "Type A"  "Type A" 
-    ##  [155] "Type A"  "Type B"  "Type A"  "Type A"  "Type AB" "Type B"  "Type B" 
-    ##  [162] "Type A"  "Type A"  "Type B"  "Type AB" "Type AB" "Type AB" "Type A" 
-    ##  [169] "Type A"  "Type B"  "Type A"  "Type AB" "Type AB" "Type B"  "Type A" 
-    ##  [176] "Type A"  "Type B"  "Type A"  "Type B"  "Type AB" "Type B"  "Type AB"
-    ##  [183] "Type B"  "Type B"  "Type B"  "Type B"  "Type AB" "Type A"  "Type AB"
-    ##  [190] "Type AB" "Type A"  "Type AB" "Type B"  "Type B"  "Type B"  "Type B" 
-    ##  [197] "Type B"  "Type B"  "Type A"  "Type A"  "Type AB" "Type AB" "Type AB"
-    ##  [204] "Type AB" "Type B"  "Type A"  "Type A"  "Type B"  "Type A"  "Type AB"
-    ##  [211] "Type B"  "Type B"  "Type A"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [218] "Type A"  "Type B"  "Type B"  "Type A"  "Type B"  "Type AB" "Type A" 
-    ##  [225] "Type A"  "Type AB" "Type B"  "Type A"  "Type AB" "Type AB" "Type A" 
-    ##  [232] "Type AB" "Type A"  "Type AB" "Type B"  "Type B"  "Type A"  "Type AB"
-    ##  [239] "Type A"  "Type B"  "Type A"  "Type A"  "Type B"  "Type B"  "Type B" 
-    ##  [246] "Type AB" "Type B"  "Type AB" "Type B"  "Type AB" "Type A"  "Type B" 
-    ##  [253] "Type A"  "Type A"  "Type A"  "Type A"  "Type AB" "Type B"  "Type AB"
-    ##  [260] "Type A"  "Type AB" "Type B"  "Type AB" "Type A"  "Type A"  "Type A" 
-    ##  [267] "Type A"  "Type B"  "Type B"  "Type A"  "Type AB" "Type B"  "Type B" 
-    ##  [274] "Type A"  "Type B"  "Type B"  "Type AB" "Type A"  "Type AB" "Type B" 
-    ##  [281] "Type B"  "Type AB" "Type A"  "Type B"  "Type A"  "Type A"  "Type A" 
-    ##  [288] "Type B"  "Type A"  "Type AB" "Type AB" "Type AB" "Type A"  "Type A" 
-    ##  [295] "Type A"  "Type A"  "Type AB" "Type A"  "Type A"  "Type A"  "Type A" 
-    ##  [302] "Type A"  "Type AB" "Type A"  "Type AB" "Type A"  "Type A"  "Type A" 
-    ##  [309] "Type B"  "Type B"  "Type B"  "Type A"  "Type AB" "Type AB" "Type A" 
-    ##  [316] "Type B"  "Type B"  "Type AB" "Type A"  "Type B"  "Type A"  "Type A" 
-    ##  [323] "Type B"  "Type A"  "Type B"  "Type AB" "Type A"  "Type B"  "Type A" 
-    ##  [330] "Type A"  "Type A"  "Type B"  "Type B"  "Type A"  "Type AB" "Type AB"
-    ##  [337] "Type B"  "Type A"  "Type B"  "Type AB" "Type A"  "Type A"  "Type A" 
-    ##  [344] "Type A"  "Type A"  "Type B"  "Type B"  "Type A"  "Type A"  "Type A" 
-    ##  [351] "Type B"  "Type AB" "Type AB" "Type A"  "Type B"  "Type B"  "Type A" 
-    ##  [358] "Type A"  "Type B"  "Type B"  "Type B"  "Type B"  "Type B"  "Type AB"
-    ##  [365] "Type AB" "Type B"  "Type AB" "Type AB" "Type A"  "Type B"  "Type AB"
-    ##  [372] "Type AB" "Type A"  "Type A"  "Type AB" "Type B"  "Type AB" "Type B" 
-    ##  [379] "Type B"  "Type B"  "Type A"  "Type B"  "Type B"  "Type AB" "Type B" 
-    ##  [386] "Type A"  "Type B"  "Type AB" "Type B"  "Type A"  "Type B"  "Type A" 
-    ##  [393] "Type B"  "Type B"  "Type A"  "Type A"  "Type A"  "Type A"  "Type B" 
-    ##  [400] "Type B"  "Type A"  "Type A"  "Type AB" "Type A"  "Type A"  "Type B" 
-    ##  [407] "Type A"  "Type B"  "Type A"  "Type AB" "Type A"  "Type AB" "Type A" 
-    ##  [414] "Type AB" "Type A"  "Type A"  "Type B"  "Type B"  "Type AB" "Type AB"
-    ##  [421] "Type B"  "Type AB" "Type B"  "Type A"  "Type AB" "Type B"  "Type AB"
-    ##  [428] "Type AB" "Type A"  "Type B"  "Type B"  "Type B"  "Type A"  "Type B" 
-    ##  [435] "Type A"  "Type B"  "Type B"  "Type AB" "Type B"  "Type AB" "Type B" 
-    ##  [442] "Type AB" "Type B"  "Type B"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [449] "Type B"  "Type AB" "Type AB" "Type AB" "Type AB" "Type B"  "Type B" 
-    ##  [456] "Type A"  "Type A"  "Type B"  "Type AB" "Type AB" "Type B"  "Type B" 
-    ##  [463] "Type B"  "Type A"  "Type B"  "Type A"  "Type A"  "Type AB" "Type A" 
-    ##  [470] "Type B"  "Type A"  "Type A"  "Type B"  "Type A"  "Type AB" "Type A" 
-    ##  [477] "Type AB" "Type A"  "Type A"  "Type B"  "Type AB" "Type A"  "Type B" 
-    ##  [484] "Type A"  "Type A"  "Type B"  "Type B"  "Type A"  "Type B"  "Type AB"
-    ##  [491] "Type A"  "Type A"  "Type B"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [498] "Type AB" "Type B"  "Type B"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [505] "Type AB" "Type B"  "Type A"  "Type AB" "Type A"  "Type A"  "Type B" 
-    ##  [512] "Type B"  "Type B"  "Type AB" "Type B"  "Type A"  "Type B"  "Type AB"
-    ##  [519] "Type A"  "Type A"  "Type AB" "Type AB" "Type B"  "Type B"  "Type A" 
-    ##  [526] "Type A"  "Type AB" "Type AB" "Type B"  "Type B"  "Type A"  "Type A" 
-    ##  [533] "Type AB" "Type B"  "Type AB" "Type A"  "Type A"  "Type A"  "Type B" 
-    ##  [540] "Type B"  "Type B"  "Type AB" "Type B"  "Type AB" "Type A"  "Type B" 
-    ##  [547] "Type B"  "Type A"  "Type A"  "Type A"  "Type A"  "Type AB" "Type B" 
-    ##  [554] "Type AB" "Type AB" "Type B"  "Type B"  "Type AB" "Type A"  "Type A" 
-    ##  [561] "Type A"  "Type AB" "Type AB" "Type A"  "Type B"  "Type B"  "Type B" 
-    ##  [568] "Type AB" "Type A"  "Type A"  "Type B"  "Type AB" "Type A"  "Type AB"
-    ##  [575] "Type B"  "Type A"  "Type A"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [582] "Type A"  "Type A"  "Type B"  "Type B"  "Type A"  "Type B"  "Type B" 
-    ##  [589] "Type B"  "Type B"  "Type B"  "Type AB" "Type AB" "Type A"  "Type B" 
-    ##  [596] "Type A"  "Type A"  "Type B"  "Type B"  "Type B"  "Type B"  "Type A" 
-    ##  [603] "Type AB" "Type B"  "Type A"  "Type AB" "Type A"  "Type B"  "Type A" 
-    ##  [610] "Type AB" "Type A"  "Type AB" "Type B"  "Type B"  "Type A"  "Type B" 
-    ##  [617] "Type B"  "Type B"  "Type A"  "Type A"  "Type B"  "Type B"  "Type AB"
-    ##  [624] "Type AB" "Type B"  "Type A"  "Type AB" "Type AB" "Type B"  "Type AB"
-    ##  [631] "Type B"  "Type AB" "Type AB" "Type A"  "Type AB" "Type AB" "Type B" 
-    ##  [638] "Type B"  "Type AB" "Type A"  "Type B"  "Type AB" "Type B"  "Type A" 
-    ##  [645] "Type A"  "Type A"  "Type AB" "Type AB" "Type A"  "Type A"  "Type B" 
-    ##  [652] "Type A"  "Type B"  "Type A"  "Type A"  "Type AB" "Type A"  "Type B" 
-    ##  [659] "Type AB" "Type A"  "Type A"  "Type A"  "Type A"  "Type AB" "Type A" 
-    ##  [666] "Type B"  "Type B"  "Type A"  "Type B"  "Type A"  "Type A"  "Type A" 
-    ##  [673] "Type B"  "Type B"  "Type B"  "Type A"  "Type B"  "Type B"  "Type A" 
-    ##  [680] "Type A"  "Type A"  "Type B"  "Type B"  "Type A"  "Type A"  "Type B" 
-    ##  [687] "Type AB" "Type B"  "Type AB" "Type A"  "Type AB" "Type B"  "Type A" 
-    ##  [694] "Type B"  "Type AB" "Type A"  "Type B"  "Type AB" "Type AB" "Type A" 
-    ##  [701] "Type B"  "Type B"  "Type A"  "Type A"  "Type B"  "Type A"  "Type B" 
-    ##  [708] "Type A"  "Type A"  "Type B"  "Type B"  "Type B"  "Type B"  "Type B" 
-    ##  [715] "Type AB" "Type B"  "Type A"  "Type B"  "Type B"  "Type B"  "Type AB"
-    ##  [722] "Type B"  "Type A"  "Type AB" "Type B"  "Type A"  "Type B"  "Type A" 
-    ##  [729] "Type B"  "Type B"  "Type A"  "Type A"  "Type A"  "Type A"  "Type A" 
-    ##  [736] "Type A"  "Type AB" "Type A"  "Type A"  "Type B"  "Type AB" "Type B" 
-    ##  [743] "Type A"  "Type A"  "Type AB" "Type A"  "Type B"  "Type B"  "Type A" 
-    ##  [750] "Type AB" "Type B"  "Type A"  "Type AB" "Type AB" "Type A"  "Type AB"
-    ##  [757] "Type AB" "Type A"  "Type AB" "Type AB" "Type B"  "Type AB" "Type B" 
-    ##  [764] "Type AB" "Type A"  "Type A"  "Type B"  "Type A"  "Type A"  "Type B" 
-    ##  [771] "Type B"  "Type B"  "Type B"  "Type B"  "Type AB" "Type B"  "Type B" 
-    ##  [778] "Type A"  "Type A"  "Type B"  "Type A"  "Type A"  "Type AB" "Type A" 
-    ##  [785] "Type AB" "Type A"  "Type B"  "Type B"  "Type A"  "Type AB" "Type B" 
-    ##  [792] "Type B"  "Type B"  "Type B"  "Type B"  "Type B"  "Type B"  "Type A" 
-    ##  [799] "Type A"  "Type B"  "Type AB" "Type B"  "Type A"  "Type B"  "Type B" 
-    ##  [806] "Type AB" "Type AB" "Type AB" "Type A"  "Type B"  "Type A"  "Type A" 
-    ##  [813] "Type AB" "Type A"  "Type AB" "Type AB" "Type B"  "Type AB" "Type B" 
-    ##  [820] "Type B"  "Type B"  "Type AB" "Type A"  "Type A"  "Type A"  "Type A" 
-    ##  [827] "Type AB" "Type AB" "Type A"  "Type AB" "Type AB" "Type AB" "Type AB"
-    ##  [834] "Type AB" "Type B"  "Type A"  "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [841] "Type A"  "Type A"  "Type A"  "Type A"  "Type A"  "Type AB" "Type A" 
-    ##  [848] "Type B"  "Type B"  "Type AB" "Type B"  "Type B"  "Type AB" "Type A" 
-    ##  [855] "Type A"  "Type A"  "Type B"  "Type A"  "Type B"  "Type B"  "Type A" 
-    ##  [862] "Type B"  "Type A"  "Type AB" "Type A"  "Type B"  "Type B"  "Type B" 
-    ##  [869] "Type B"  "Type A"  "Type A"  "Type A"  "Type A"  "Type A"  "Type B" 
-    ##  [876] "Type B"  "Type A"  "Type AB" "Type B"  "Type AB" "Type A"  "Type A" 
-    ##  [883] "Type A"  "Type AB" "Type AB" "Type AB" "Type AB" "Type AB" "Type B" 
-    ##  [890] "Type AB" "Type B"  "Type AB" "Type AB" "Type A"  "Type A"  "Type B" 
-    ##  [897] "Type AB" "Type A"  "Type A"  "Type A"  "Type A"  "Type A"  "Type AB"
-    ##  [904] "Type A"  "Type B"  "Type A"  "Type A"  "Type B"  "Type A"  "Type B" 
-    ##  [911] "Type A"  "Type B"  "Type AB" "Type A"  "Type A"  "Type A"  "Type A" 
-    ##  [918] "Type A"  "Type A"  "Type A"  "Type A"  "Type B"  "Type AB" "Type B" 
-    ##  [925] "Type A"  "Type AB" "Type B"  "Type B"  "Type B"  "Type A"  "Type AB"
-    ##  [932] "Type AB" "Type A"  "Type B"  "Type B"  "Type A"  "Type AB" "Type AB"
-    ##  [939] "Type A"  "Type AB" "Type B"  "Type B"  "Type A"  "Type A"  "Type AB"
-    ##  [946] "Type A"  "Type B"  "Type B"  "Type B"  "Type B"  "Type A"  "Type A" 
-    ##  [953] "Type A"  "Type A"  "Type B"  "Type A"  "Type B"  "Type A"  "Type A" 
-    ##  [960] "Type B"  "Type B"  "Type AB" "Type B"  "Type B"  "Type B"  "Type B" 
-    ##  [967] "Type A"  "Type A"  "Type AB" "Type AB" "Type A"  "Type A"  "Type B" 
-    ##  [974] "Type AB" "Type AB" "Type AB" "Type B"  "Type B"  "Type B"  "Type B" 
-    ##  [981] "Type B"  "Type AB" "Type AB" "Type B"  "Type B"  "Type AB" "Type B" 
-    ##  [988] "Type A"  "Type A"  "Type B"  "Type AB" "Type AB" "Type B"  "Type A" 
-    ##  [995] "Type A"  "Type AB" "Type A"  "Type AB" "Type A"  "Type A"
+    ##  [1] "Type B"  "Type AB" "Type AB" "Type B"  "Type AB" "Type B"  "Type A" 
+    ##  [8] "Type A"  "Type AB" "Type B"  "Type A"  "Type B"  "Type A"  "Type A" 
+    ## [15] "Type A"  "Type AB" "Type A"  "Type B"  "Type A"  "Type A"  "Type A" 
+    ## [22] "Type B"  "Type AB" "Type A"  "Type B"  "Type B"  "Type A"  "Type B" 
+    ## [29] "Type A"  "Type B"  "Type A"  "Type B"  "Type A"  "Type A"  "Type AB"
+    ## [36] "Type B"  "Type AB" "Type A"  "Type B"  "Type A"  "Type A"  "Type A" 
+    ## [43] "Type B"  "Type A"  "Type A"  "Type A"  "Type B"  "Type AB" "Type A" 
+    ## [50] "Type B"
 
 # 2 A case study of DNA sequence
 
@@ -291,7 +156,7 @@ ACGsim <- function(reps){
 ACGsim(10000)
 ```
 
-    ## [1] 0.0437
+    ## [1] 0.045
 
 ### Ex 4.2
 
@@ -311,7 +176,7 @@ Gsim <- function(reps, length = 10){
 Gsim(10000)
 ```
 
-    ## [1] 0.057
+    ## [1] 0.0611
 
 ### Ex 4.3
 
@@ -329,7 +194,7 @@ legend("topright",legend = c("simulation", "probability"),
        col = c("blue", "red"), pch = c(0, 1))
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 # 3 A case study of neuronal data
 
@@ -347,7 +212,7 @@ legend("topright", legend=c(seq(0.5,1.5,0.1)),
        col=c(2:length(seq(0.5,1.5,0.1))), lty = 1)
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 A ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\\lambda")
 value of 1.5 fits the data the best.
@@ -391,7 +256,7 @@ hist(cells$ef__peak_t_ramp[cells$donor__species == "Homo Sapiens"],
      breaks = 50, main = "Rank Spike Time frequencies for Homo Sapiens")
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 hist(cells$ef__peak_t_ramp[cells$donor__species == "Mus musculus"], 
@@ -399,7 +264,7 @@ hist(cells$ef__peak_t_ramp[cells$donor__species == "Mus musculus"],
      breaks = 50, main = "Rank Spike Time frequencies for Mus musculus")
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 
 ### Ex 6.4
 
@@ -415,7 +280,7 @@ for(i in 1:3){
 legend("topright", legend = 1:3, col = 2:4, lty = 1)
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ### Ex 6.5
 
@@ -434,7 +299,7 @@ curve(dlnorm(x, sdlog = 0.6, meanlog = 2),
       col = 3, ylab = "log density function")
 ```
 
-![](assignment1_rmd_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](assignment1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 Yes, the density fits the
 data.
