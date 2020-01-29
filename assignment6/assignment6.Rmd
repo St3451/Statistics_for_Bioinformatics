@@ -1,8 +1,8 @@
 ---
-title: "Handin 6"
-author: "Stefano Pellegrini"
-date: "1/8/2020"
-output: pdf_document
+title: "Assignment 6"
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 # Ex 1 CORIS data
 
@@ -591,7 +591,6 @@ train_target_gen <- function(data, n){
   return(list(train = train, target = target))                                     
 }                                                         
 
-# Without function
 accuracy_200 <- function(){
   i <- sample(1:1599, size = 200, replace = FALSE)
   
@@ -600,13 +599,14 @@ accuracy_200 <- function(){
   all_train <- rbind(red_train, white_train)
   
   red_target <- wines_red[i,]
-  red_step_rnd <- step_selection(all_train)
+  red_step_rnd <- step_selection.aic(all_train)
   acc_red <- calc_acc(object = red_step_rnd, data = all_train)
+  
   print("..loading..")
   return(acc_red)
 }
 
-acc_rnd <- replicate(50, accuracy_200())                
+acc_rnd <- replicate(20, accuracy_200())                
 acc_rnd_mean <- mean(acc_rnd) 
 acc_rnd_mean
 ```

@@ -1,17 +1,11 @@
----
-title: "Statistics for Bioinformatics and eScience - Handin 2"
-author: "Group 1"
-date: "12/02/2019"
-output: pdf_document
----
+Assignment 2
+================
 
-# 1. Brain cell dataset
-```{r echo = FALSE, eval = TRUE}
-cells <- read.csv("cell_types.csv", na.strings = "")
-```
+# 1\. Brain cell dataset
 
 ## 4.1: plot separately histograms for the distribution of the ramp spike time variable in the left and right hemisphere
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 left_raw <- cells$ef__peak_t_ramp[cells$specimen__hemisphere == "left"]
 left <- left_raw[!is.na(left_raw)] # removing NA values again to avoid missing values error
                  
@@ -22,14 +16,22 @@ hist(left,
      breaks = 40, 
      proba = T, 
      main = "ramp spike time in left hemisphere", xlab = "", ylim = c(0,0.2))
+```
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
 hist(left, 
      breaks = 40, 
      proba = T, 
      main = "ramp spike time in right hemisphere", xlab = "", ylim = c(0,0.2))
 ```
 
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
+
 ## 4.2: plot together kernel density estimations for the ramp spike time variable in the left and right hemisphere.
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 plot(density(right),
      col = "red",
      main = "Kernel density estimation for the ramp spike time",
@@ -42,8 +44,11 @@ legend("topright",
        lty = 1)
 ```
 
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
 ## 4.3: plot together kernel density estimations for the ramp spike time variable for males and females.
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 female_raw <-
   cells$ef__peak_t_ramp[cells$donor__species == "Homo Sapiens" &
   cells$donor__sex == "Female"]
@@ -65,9 +70,13 @@ legend("topright",
        lty = 1)
 ```
 
-## Ex 5 
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+## Ex 5
+
 ## 5.1: Q-Q plot of ramp spike time distribution for humans, between empirical quantiles and theoretical ones (dlnorm distribution)
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 humans_raw <- cells$ef__peak_t_ramp[cells$donor__species == "Homo Sapiens"]
 humans <- humans_raw[!is.na(humans_raw)]
 
@@ -80,8 +89,11 @@ abline(0, 1,
        col = 'red')
 ```
 
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
 ## 5.2: Plot the Gaussian density on top of the histogram of the ramp spike time with better parameter values
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 allcells <- cells$ef__peak_t_ramp[!is.na(cells$ef__peak_t_ramp)]
 hist(allcells,
     breaks = 40, 
@@ -94,10 +106,15 @@ curve(dnorm(x, mean = 6.41, sd = 4.32),
       col = "red", 
       add = TRUE)
 ```
-> Our data daesnt have a left tail and the peak of the histogram is much larger than the curve of the norm distribution.
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-6-1.png)<!-- --> \>
+Our data daesnt have a left tail and the peak of the histogram is much
+larger than the curve of the norm
+distribution.
 
 ## 5.3: Q-Q plot for the ramp spike time against the Gaussian distribution with these new parameter values
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 theoretical_spike_q <- qnorm(ppoints(allcells), sd = 4.32, mean = 6.41)
 plot(sort(allcells), theoretical_spike_q,
      xlab = "Empirical quantiles",
@@ -106,11 +123,17 @@ abline(0, 1,
        col = "red")
 ```
 
-> We can visually observe that our data don't follow a Gaussian distribution since several quantiles in the tails don't match in the diagonal.
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-# 2. Empirical mean and variance
-## 6.1: Sample n values of X ~ Bi(parameter size = 100, prob = 0.3) for n = 10, 100, 1000, 1000.
-```{r echo = TRUE, eval = TRUE}
+> We can visually observe that our data don’t follow a Gaussian
+> distribution since several quantiles in the tails don’t match in the
+> diagonal.
+
+# 2\. Empirical mean and variance
+
+## 6.1: Sample n values of X \~ Bi(parameter size = 100, prob = 0.3) for n = 10, 100, 1000, 1000.
+
+``` r
 n = 100       # n. of experiments (size or i.e. nb of coin tosses)
 p = 0.3       # p. of success (i.e. head)
 EM = c()
@@ -132,8 +155,15 @@ data.frame(EM, mean, EV, var, Esd, sd,
            row.names = rep)
 ```
 
+    ##            EM mean       EV var      Esd       sd
+    ## 10    29.7000   30 15.78889  21 3.973523 4.582576
+    ## 100   30.1200   30 17.54101  21 4.188199 4.582576
+    ## 1000  30.0590   30 22.20973  21 4.712720 4.582576
+    ## 10000 29.9735   30 21.20492  21 4.604880 4.582576
+
 ## 6.2: Write a function to repeat the sampling and estimation for n = 1000 and plot.
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 samp_est_f <- function(nb_rep){
   nb_trials = 100          
   p = 0.3          
@@ -166,20 +196,31 @@ samp_est_f <- function(nb_rep){
 data <- samp_est_f(1000)
 ```
 
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+    ## rep: 1000 , var_EM: 0.02119402 , sd_EM: 0.1455817
+
 ## 6.3: Compute the standard error of the mean
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 SEM_f <- function(x){                                    
   SEM <- (sd(data$sample) / sqrt(length(data$sample) - 1)) 
   return(SEM)
 }
 data$SEM <- SEM_f(1000)
 cat("sd_EM:", data$sd_EM, ", SEM:", data$SEM)
+```
+
+    ## sd_EM: 0.1455817 , SEM: 0.1475186
+
+``` r
 # SEM = ESTIMATOR of the error between the sample means and the population mean
 # sd_EM = standard deviation of the sample means
 ```
 
 ## 6.4: draw the density of Gaussian distribution with parameters mean = 100 × 0.3 and sd equal to the sem
-```{r echo = TRUE, eval = TRUE}
+
+``` r
 plot_f <- function(x){
   hist(data$EM, 
        probability = TRUE, 
@@ -196,37 +237,93 @@ plot_f <- function(x){
 plot_f(1000)
 ```
 
-
-
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ## check the result for different values of x:
 
-```{r echo = TRUE, eval = TRUE}
+``` r
 data_10 <- samp_est_f(10)                                      
+```
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+    ## rep: 10 , var_EM: 2.058259 , sd_EM: 1.434663
+
+``` r
 data_10$SEM <- SEM_f(10)
 cat("rep:", data_10$rep,
     ", var_EM:", data_10$var_EM,          
     ", sd_EM:", data_10$sd_EM) 
+```
+
+    ## rep: 10 , var_EM: 2.058259 , sd_EM: 1.434663
+
+``` r
 cat("sd_EM:", data_10$sd_EM, ", SEM:", data_10$SEM)
+```
+
+    ## sd_EM: 1.434663 , SEM: 0.1475186
+
+``` r
 plot_f(10)
 ```
 
-```{r echo = TRUE, eval = TRUE}
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
+
+``` r
 data_100 <- samp_est_f(100)                             
+```
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+    ## rep: 100 , var_EM: 0.2055978 , sd_EM: 0.4534289
+
+``` r
 data_100$SEM <- SEM_f(100)
 cat("rep:", data_100$rep,
     ", var_EM:", data_100$var_EM,          
     ", sd_EM:", data_100$sd_EM) 
+```
+
+    ## rep: 100 , var_EM: 0.2055978 , sd_EM: 0.4534289
+
+``` r
 cat("sd_EM:", data_100$sd_EM, ", SEM:", data_100$SEM)
+```
+
+    ## sd_EM: 0.4534289 , SEM: 0.1475186
+
+``` r
 plot_f(100)
 ```
 
-```{r echo = TRUE, eval = TRUE}
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+
+``` r
 data_10000 <- samp_est_f(10000)
+```
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+    ## rep: 10000 , var_EM: 0.002039576 , sd_EM: 0.04516166
+
+``` r
 data_10000$SEM <- SEM_f(10000)
 cat("rep:", data_10000$rep,
     ", var_EM:", data_10000$var_EM,          
     ", sd_EM:", data_10000$sd_EM) 
+```
+
+    ## rep: 10000 , var_EM: 0.002039576 , sd_EM: 0.04516166
+
+``` r
 cat("sd_EM:", data_10000$sd_EM, ", SEM:", data_10000$SEM)
+```
+
+    ## sd_EM: 0.04516166 , SEM: 0.1475186
+
+``` r
 plot_f(10000)
 ```
+
+![](assignment2_rmd_files/figure-gfm/unnamed-chunk-14-2.png)<!-- -->

@@ -1,7 +1,5 @@
 ---
 title: "Assignment 5"
-author: "Group 1"
-date: "1/3/2020"
 output: pdf_document
 ---
 # Ex 1 Simple linear regression
@@ -530,15 +528,7 @@ mll <- function(pars){
 return(dnorm(y[i], mean = regr(x[i], pars[1:3]), sd = pars[4], log = T))
 }))
 }
-optim(mll, par = c(0,0,-5,1)) # The last parameter is the estimated value of the noise                                              # standard deviation.
-
-# The problem here is that it's a bit tricky to write the density, infact it daesn't work if I write it like I would write a normal mle
-
-mll2 <- function(pars){
-  -sum(dnorm(y, mean = b[1] + b[2] * x + exp(b[3] * x), sd = pars[4], log = TRUE))
-}
-optim(mll2, par = c(0,0,-5,1))
-
+optim(mll, par = c(0,0,-5,1)) # The last parameter is the estimated value of the noise                                          # (standard deviation).
 ```
 
 # Ex 4 Wine quality
@@ -596,7 +586,6 @@ while (!done){
       selected.best <- c(selected, reg)
     }
   }
-  # when the for loop finish, if score.best < score (isn't it always true???)
   if (score.best < score){
     fit <- best                         # store best model to fit
     score <- score.best                 # score best score to score

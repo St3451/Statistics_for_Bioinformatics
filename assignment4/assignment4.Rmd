@@ -1,7 +1,5 @@
 ---
-title: "Assignment4"
-author: "Group 1"
-date: "12/13/2019"
+title: "Assignment 4"
 output: pdf_document
 ---
 # Ex 1
