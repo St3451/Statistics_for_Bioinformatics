@@ -2,4 +2,4 @@
 
 __assignment5__ (pdf or rmd) for solved exercises.
 
-__text5__ for assignment questions.
+__questions5__ for assignment questions.

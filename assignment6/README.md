@@ -2,4 +2,4 @@
 
 __assignment6__ (pdf or rmd) for solved exercises.
 
-__text6__ for assignment questions.
+__questions6__ for assignment questions.
