@@ -1,7 +1,7 @@
 ## Week 4 assignment
 
-__assignment4__ (pdf or rmd) for solved exercises.
+* <code>assignment4</code> (pdf or rmd) for solved exercises.
 
-__questions4__ for assignment questions.
+* <code>questions4</code> for assignment questions.
 
-__solutions4__ for solutions provided by the professor.
+* <code>solutions4</code> for solutions provided by the professor.
