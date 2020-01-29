@@ -1,7 +1,5 @@
 Practice 1
 ================
-Stefano Pellegrini
-1/5/2020
 
 # Problem 1
 
@@ -100,12 +98,16 @@ chisq260$p.value > alpha
 
     ## [1] TRUE
 
-If p-value \(> \alpha\) is TRUE we don’t reject the null and so they are
-independent, if p-value \(> \alpha\) is FALSE they are dependent. For
-220 and 243 dose we can reject the null hypothesis of independence, and
-thus we can say that (at a level 0.05) there is a statistically
-significant dependence between treatment and dead. For the lowest and
-highest radiation dose we can not reject the null hypothesis of
+If p-value ![\>
+\\alpha](https://latex.codecogs.com/png.latex?%3E%20%5Calpha
+"\> \\alpha") is TRUE we don’t reject the null and so they are
+independent, if p-value ![\>
+\\alpha](https://latex.codecogs.com/png.latex?%3E%20%5Calpha
+"\> \\alpha") is FALSE they are dependent. For 220 and 243 dose we can
+reject the null hypothesis of independence, and thus we can say that (at
+a level 0.05) there is a statistically significant dependence between
+treatment and dead. For the lowest and highest radiation dose we can not
+reject the null hypothesis of
 independence.
 
 ## Ex 1.3 To compare probability of death for different treatment under the four possible neutron doses we perform now one-sided Wald tests, using the (asymptotically normal) statistic.
@@ -160,7 +162,7 @@ pval_201 <- 1 - pnorm(-w_201)
 pval_201
 ```
 
-    ## [1] 0.01490724
+    ## [1] 0.01429151
 
 ``` r
 # Dose 220
@@ -175,7 +177,7 @@ pval_220 <- 1 - pnorm(-w_220)
 pval_220
 ```
 
-    ## [1] 1.938816e-11
+    ## [1] 1.667114e-10
 
 ``` r
 # Dose 243
@@ -190,7 +192,7 @@ pval_243 <- 1 - pnorm(-w_243)
 pval_243
 ```
 
-    ## [1] 1.864103e-10
+    ## [1] 3.367406e-11
 
 ``` r
 # Dose 260
@@ -205,7 +207,7 @@ pval_260 <- 1 - pnorm(-w_260)
 pval_260
 ```
 
-    ## [1] 0.1198883
+    ## [1] 0.1141181
 
 ``` r
 ## It's the same of:
@@ -230,7 +232,7 @@ pval_201 <- pnorm(w_201)
 pval_201
 ```
 
-    ## [1] 0.01490724
+    ## [1] 0.01429151
 
 ``` r
 # Dose 220
@@ -245,7 +247,7 @@ pval_220 <- pnorm(w_220)
 pval_220
 ```
 
-    ## [1] 1.938819e-11
+    ## [1] 1.667114e-10
 
 ``` r
 # Dose 243
@@ -260,7 +262,7 @@ pval_243 <- pnorm(w_243)
 pval_243
 ```
 
-    ## [1] 1.864103e-10
+    ## [1] 3.367402e-11
 
 ``` r
 # Dose 260
@@ -275,11 +277,13 @@ pval_260 <- pnorm(w_260)
 pval_260
 ```
 
-    ## [1] 0.1198883
+    ## [1] 0.1141181
 
-If \(W < -Z\) then we have an extreme value for the null hypothesis and
-so I can reject it. If p-value \(< \alpha\) then I can reject the null
-hypothesis.
+If ![W \< -Z](https://latex.codecogs.com/png.latex?W%20%3C%20-Z
+"W \< -Z") then we have an extreme value for the null hypothesis and so
+I can reject it. If p-value ![\<
+\\alpha](https://latex.codecogs.com/png.latex?%3C%20%5Calpha
+"\< \\alpha") then I can reject the null hypothesis.
 
 I can reject the null hypothesis, with significante level of 0.05, that
 the Streptomycin treated mice that receive radiation dose of 201, 220,
@@ -417,8 +421,10 @@ anova(model_strept1, model_strept2, test = "LRT")
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-p-value \(> alpha\), I don’t reject the H0 (\(H0 =\) advanced model is
-not significantly better) so I choose the log-regr 1 according to the
+p-value ![\> alpha](https://latex.codecogs.com/png.latex?%3E%20alpha
+"\> alpha"), I don’t reject the H0 (![H0
+=](https://latex.codecogs.com/png.latex?H0%20%3D "H0 =") advanced model
+is not significantly better) so I choose the log-regr 1 according to the
 LRT test.
 
 According to the AIC scores the log-regr 2 model perform slightly better
@@ -481,9 +487,12 @@ lowest p-value, it has a positive estimated value, meaning that an
 increase of abdomen circumference is correlated to an increase in body
 fat percentage.
 
-We can’t reject at \(\alpha = 0.05\) that the coefficient for knee is
-equal to 0, that’s because it has a large p-value and we can reject the
-\(H0: coefficient = 0\) only if the p-value is lower than
+We can’t reject at ![\\alpha
+= 0.05](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%200.05
+"\\alpha = 0.05") that the coefficient for knee is equal to 0, that’s
+because it has a large p-value and we can reject the ![H0: coefficient
+= 0](https://latex.codecogs.com/png.latex?H0%3A%20coefficient%20%3D%200
+"H0: coefficient = 0") only if the p-value is lower than
 alpha.
 
 ## Ex 2.2 Perform model selection using both forward and backward stepwise regression using BIC as score.
@@ -550,8 +559,9 @@ summary(model_step_backward)
     ## Multiple R-squared:  0.7332, Adjusted R-squared:  0.7289 
     ## F-statistic:   169 on 4 and 246 DF,  p-value: < 2.2e-16
 
-In order to use the BIC score i add \(k = log(n)\). The two models are
-the
+In order to use the BIC score i add ![k =
+log(n)](https://latex.codecogs.com/png.latex?k%20%3D%20log%28n%29
+"k = log(n)"). The two models are the
 same.
 
 ## Ex 2.3 Compute the body mass index for all the individuals in the data set. Fit the following linear model to estimate the percentage of body fat.
@@ -575,21 +585,21 @@ intercept_bt <- coeff_bt[1,]
 intercept_bt
 ```
 
-    ##   [1] -29.89761 -32.01171 -28.73722 -37.20751 -32.78398 -30.09246 -23.00255
-    ##   [8] -25.81384 -34.84511 -23.21482 -32.55795 -27.22642 -25.20581 -22.44397
-    ##  [15] -20.86401 -24.58661 -32.28921 -18.58165 -37.07510 -25.03494 -31.65237
-    ##  [22] -27.82389 -29.12306 -23.98308 -33.25181 -27.23357 -29.61380 -18.23142
-    ##  [29] -28.27917 -26.43016 -29.95802 -23.93752 -28.39588 -31.36616 -28.10478
-    ##  [36] -32.08092 -35.51960 -19.48430 -21.34926 -28.66165 -23.86686 -28.03012
-    ##  [43] -28.56799 -27.24713 -32.62344 -35.30730 -25.54476 -29.20533 -32.70159
-    ##  [50] -26.26776 -31.69685 -21.27859 -22.54483 -29.19939 -32.26731 -30.75538
-    ##  [57] -23.57703 -34.76156 -31.66370 -29.31400 -29.50220 -31.68756 -31.41510
-    ##  [64] -26.20518 -27.98641 -26.95001 -27.80668 -23.94687 -28.79542 -26.95195
-    ##  [71] -28.99463 -24.61845 -27.10365 -21.33530 -33.58470 -30.23955 -26.51341
-    ##  [78] -23.24137 -25.16020 -25.36977 -28.53905 -24.14185 -33.78978 -22.60721
-    ##  [85] -29.69454 -31.16765 -34.54765 -18.74927 -28.92843 -34.50315 -28.72532
-    ##  [92] -34.84363 -27.33456 -30.96333 -35.14519 -27.49337 -34.45250 -30.13012
-    ##  [99] -23.16795 -30.72267
+    ##   [1] -24.63716 -25.91140 -27.32870 -33.95476 -30.25486 -24.09045 -22.18493
+    ##   [8] -33.02563 -32.08539 -28.48490 -29.92285 -30.74451 -27.88128 -31.85247
+    ##  [15] -27.48221 -29.14514 -30.16673 -25.22060 -31.74154 -29.58872 -29.68288
+    ##  [22] -20.48253 -31.35693 -30.62342 -31.13766 -36.40465 -27.26967 -18.51445
+    ##  [29] -32.37022 -25.26774 -28.72238 -28.83227 -27.81635 -28.52276 -30.83274
+    ##  [36] -30.79850 -28.67467 -27.82800 -24.45685 -28.40164 -21.59425 -30.76662
+    ##  [43] -33.90937 -31.71586 -33.52342 -24.85937 -31.29794 -30.66416 -29.69550
+    ##  [50] -23.65937 -28.08192 -35.22859 -34.07155 -35.20883 -28.81419 -27.66764
+    ##  [57] -18.04119 -29.59942 -36.62317 -24.81164 -22.01230 -38.39029 -29.69448
+    ##  [64] -31.65425 -26.36128 -25.90870 -23.36526 -19.73562 -32.41520 -22.57120
+    ##  [71] -31.40888 -31.71027 -28.71712 -32.32259 -21.70764 -28.64098 -32.85130
+    ##  [78] -23.57177 -22.62617 -21.30994 -26.68098 -29.19652 -27.25486 -31.71371
+    ##  [85] -29.23621 -36.66711 -25.65311 -21.68911 -30.57635 -35.92417 -32.60228
+    ##  [92] -35.03463 -32.55343 -29.77541 -28.08292 -27.24186 -28.15081 -22.62116
+    ##  [99] -32.20516 -28.22631
 
 ``` r
 bmi_bt <- coeff_bt[2,]
@@ -601,10 +611,10 @@ age_bt <- coeff_bt[3,]
 t(apply(coeff_bt, MARGIN = 1, quantile, probs = c(alpha/2, 1 - alpha/2)))
 ```
 
-    ##                    2.5%       97.5%
-    ## (Intercept) -35.4187586 -19.0984085
-    ## bmi           1.2990710   1.9188517
-    ## age           0.1042459   0.1860981
+    ##                     2.5%       97.5%
+    ## (Intercept) -36.51937260 -20.0904036
+    ## bmi           1.29229044   1.9210646
+    ## age           0.08550821   0.1864637
 
 ``` r
 # or
@@ -612,21 +622,21 @@ quantile(intercept_bt, probs = c(alpha/2, 1 - alpha/2))
 ```
 
     ##      2.5%     97.5% 
-    ## -35.41876 -19.09841
+    ## -36.51937 -20.09040
 
 ``` r
 quantile(bmi_bt, probs = c(alpha/2, 1 - alpha/2))
 ```
 
     ##     2.5%    97.5% 
-    ## 1.299071 1.918852
+    ## 1.292290 1.921065
 
 ``` r
 quantile(age_bt, probs = c(alpha/2, 1 - alpha/2))
 ```
 
-    ##      2.5%     97.5% 
-    ## 0.1042459 0.1860981
+    ##       2.5%      97.5% 
+    ## 0.08550821 0.18646375
 
 ``` r
 # Quantile method
@@ -641,7 +651,7 @@ paste("95% Confidence Interval for the intercept: ( a =", a_intercept,
       ", b= ", b_intercept, ")")
 ```
 
-    ## [1] "95% Confidence Interval for the intercept: ( a = -36.2838971466421 , b=  -19.2156665526668 )"
+    ## [1] "95% Confidence Interval for the intercept: ( a = -36.1591474596439 , b=  -19.340416239665 )"
 
 ``` r
 k_bmi <- sm_bmi.age[2,1]
@@ -651,7 +661,7 @@ b_bmi <- k_bmi + se_bmi * z
 paste("95% Confidence Interval for the BMI: ( a =", a_bmi, ", b= ", b_bmi, ")")
 ```
 
-    ## [1] "95% Confidence Interval for the BMI: ( a = 1.24099349080516 , b=  1.95262467930592 )"
+    ## [1] "95% Confidence Interval for the BMI: ( a = 1.24676481406748 , b=  1.94685335604361 )"
 
 ``` r
 k_age <- sm_bmi.age[3,1]
@@ -661,7 +671,7 @@ b_age <- k_age + se_age * z
 paste("95% Confidence Interval for the age: ( a =", a_age, ", b= ", b_age, ")")
 ```
 
-    ## [1] "95% Confidence Interval for the age: ( a = 0.0950642442607927 , b=  0.186059735501583 )"
+    ## [1] "95% Confidence Interval for the age: ( a = 0.0867590163120452 , b=  0.194364963450331 )"
 
 ``` r
 # Confint built-in R function
@@ -954,9 +964,9 @@ data.frame(row.names = c("mu", "b"),
            b = c(b_mu, b_b))
 ```
 
-    ##            a         b
-    ## mu 17.504283 18.605305
-    ## b   6.171394  7.017699
+    ##           a         b
+    ## mu 17.52710 18.582486
+    ## b   6.16471  7.024384
 
 ``` r
 # Compute confidence interval using percentile
@@ -964,8 +974,8 @@ t(apply(gumbel_par_bt, MARGIN = 1, quantile, probs = c(alpha/2, 1 - alpha/2)))
 ```
 
     ##           2.5%     97.5%
-    ## [1,] 17.487720 18.603576
-    ## [2,]  6.128647  7.000751
+    ## [1,] 17.542615 18.587146
+    ## [2,]  6.149188  6.989679
 
 ``` r
     # or
@@ -973,14 +983,14 @@ quantile(mu_bt, probs = c(alpha/2, 1 - alpha/2))
 ```
 
     ##     2.5%    97.5% 
-    ## 17.48772 18.60358
+    ## 17.54262 18.58715
 
 ``` r
 quantile(b_bt, probs = c(alpha/2, 1 - alpha/2))
 ```
 
     ##     2.5%    97.5% 
-    ## 6.128647 7.000751
+    ## 6.149188 6.989679
 
 ## 3.6
 
@@ -1024,4 +1034,4 @@ b_pm <- sum(bs * w)
 c(mu_pm, b_pm)
 ```
 
-    ## [1] 10.633274  6.020418
+    ## [1] 11.697298  4.488488

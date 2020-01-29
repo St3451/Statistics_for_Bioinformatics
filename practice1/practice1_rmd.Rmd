@@ -1,8 +1,8 @@
 ---
 title: "Practice 1"
-author: "Stefano Pellegrini"
-date: "1/5/2020"
-output: rmarkdown::github_document
+output:
+  github_document:
+    pandoc_args: --webtex
 ---
 # Problem 1
 
