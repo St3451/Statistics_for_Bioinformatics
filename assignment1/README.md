@@ -1,7 +1,7 @@
 ## Week 1 assignment
 
-__Assignment1__ $\rightarrow$ solved questions.
+__Assignment1__ for solved questions.
 
-__Text1__ $\rightarrow$ assignment questions.
+__Text1__ for assignment questions.
 
 __Solutions1__.
