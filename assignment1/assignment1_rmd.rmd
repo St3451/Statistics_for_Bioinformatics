@@ -1,8 +1,6 @@
 ---
-title: "Statistics for Bioinformatics and eScience - Handin 1"
-author: "Group 1"
-date: "11/27/2019"
-output: pdf_document
+title: "Assignment 1"
+output: rmarkdown::github_document
 ---
 
 # 1 Blood types genetics

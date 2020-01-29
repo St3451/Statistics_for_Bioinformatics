@@ -1,0 +1,613 @@
+---
+title: "Handin 6"
+author: "Stefano Pellegrini"
+date: "1/8/2020"
+output: pdf_document
+---
+# Ex 1 CORIS data
+
+```{r}
+coris <- read.table("coris.dat", skip = 4, sep = ",", 
+                    col.names = c("row.names", 
+                                  "sbp", 
+                                  "tobacco", 
+                                  "ldl", 
+                                  "adiposity", 
+                                  "famhist", 
+                                  "typea", 
+                                  "obesity", 
+                                  "alcohol", 
+                                  "age", 
+                                  "chd"))[,-1] # take all the columns exept the first
+coris$chd <- as.factor(coris$chd) # Change the response as factor
+```
+
+## Ex 1.1
+
+### Fit the full logistic regression model using all the predictors. Obtain estimations of the accuracy using both leave-one-out and 10-fold cross validation. 
+
+```{r}
+full_model <- glm(chd ~ ., family ="binomial", data = coris)
+summary(full_model)
+```
+
+For all Gherardo solutions I need a function to transfrom the prediction output to the class values, it takes a prediction, the levels of the response variable, the inverse of the link function of the logistic regression
+
+```{r}
+toClass <- function(predictions, levels, linkinv = binomial()$linkinv){
+  ## threshold the prob of success
+  a <- linkinv(predictions) > 0.5  # if prob succ > 0.5 => success
+  b <- array(dim = c(length(predictions)))
+  
+  b[a] <- levels[2] # (second lvl)
+  b[!a] <- levels[1] # otherwise not success (first lvl)
+  
+return(factor(b, levels = levels)) # we should return a factor
+}
+
+predicted <- toClass(predict(full_model), levels(coris$chd))
+tt <- table(predicted, coris$chd)
+acc_train <- sum(diag(tt)) / sum(tt) # accuracy the training set
+acc_train
+```
+
+### Cross validation leave 1 out
+
+```{r}
+# Check that the inverse of the link function > 0.5 OR P(chd) > 0.5
+rcv_calc <- function(model = chd  ~ .){ 
+correct_pred = 0              # correct prediction = T positive + T negative
+  for(i in 1:nrow(coris)) {      
+  # fit model with all but i row    
+    rcv_model <- glm(formula = model, family ="binomial", data = coris[-i,]) 
+  # predict value for row i    
+    chd_pred <- as.numeric(predict(rcv_model, newdata = coris[i,], type = "response") > 0.5)   # predict i'th observation
+  # check if prediction is good or not and count the good predictions
+    correct_pred <- correct_pred + (coris[i,]$chd == chd_pred)                                 # correct_pred = sum of diagonal of confusion (T positive + T negative)
+  } 
+  # save it calculate average
+  return(correct_pred/nrow(coris))
+}
+rcv_calc()                        # accuracy full model leave 1 out
+
+  # or from Gherardo solutions
+n <- nrow(coris)
+res_loo <- sapply(1:n, function(i){
+  fit <- glm(chd ~ ., data = coris[-i, ], family = "binomial")
+  pr <- predict(fit, newdata = coris[i,])
+  pred.class <- toClass(pr, levels = levels(coris$chd))
+  return(pred.class == coris$chd[i])
+})
+acc_loo <- sum(res_loo) / length(res_loo)
+acc_loo
+```
+
+### K-fold cross validation
+
+```{r}
+kfold_rcv_calc <- function(key = 5, model = chd  ~ ., shuffle = TRUE){
+  if (shuffle){
+    n <-  nrow(coris)                         # if you want to generalize just add data = model$data
+    coris <- coris[sample(1:n),]              # and change all the names coris to data
+  }
+  correct_pred = 0   
+  k <- key
+  folds <- list()           
+  n <- nrow(coris) %/% k 
+  
+  for (i in 1:k){
+    folds[[i]] <- ((i-1) * n + 1):(i * n)
+    
+    rcv_model <- glm(formula = model, family ="binomial", data = coris[-folds[[i]],])
+    chd_pred <- as.numeric(
+      predict(rcv_model, newdata = coris[folds[[i]],], type = "response") > 0.5)
+    correct_pred <- correct_pred + sum(coris[folds[[i]],]$chd == chd_pred)
+  } 
+  return(correct_pred/ (k * n))          
+}
+kfold_rcv_calc(10, shuffle = TRUE)
+  
+  # or from Gherardo during lecture
+kfold_rcv_calc2 <- function(key = 5, model = chd  ~ .){
+  correct_pred = 0   
+  k <- key
+  folds <- list()           
+  m <- nrow(coris) %/% k    
+  res <- c()
+  
+  for (i in 1:k){
+    folds[[i]] <- ((i-1) * m + 1):(i * m)
+      
+    rcv_model <- glm(formula = model, family ="binomial", data = coris[-folds[[i]],])
+    chd_pred <- as.numeric(
+      predict(rcv_model, newdata = coris[folds[[i]],], type = "response") > 0.5)
+    
+    comparison <- coris[folds[[i]],]$chd == chd_pred
+    res[i] <- sum(comparison)
+  } 
+  return(res) 
+}
+kfold_rcv_calc2(10)               
+mean(kfold_rcv_calc2(10)/46)             # accuracy full model k-fold
+```
+
+#### Repeat with shuffled data (I updated the previous function with shuffl) and groups that include all observations
+
+```{r}
+# 2) Shuffle the dataset and prepare the groups for the k-fold rcv (more precise groups)
+n <- nrow(coris)
+corisSHF <- coris[sample(1:n), ]
+
+k <- 10
+r <- floor(n / k)
+groups <- list()
+t <- 0
+s <- 0
+for (i in 1:10){ # in this way is more complicated but it include all the observations
+  if (i > 8){
+    t <- 1
+    if (i > 9){
+      s <- 1
+    }
+  }
+  groups[[i]] <- ((i - 1) * r + 1 + s) : (i * r + t + s)
+}
+
+# 3) Cross validation with shuffled data (full model)
+res_10 <- sapply(1:10, function(i){
+  fit <- glm(chd ~ ., data = corisSHF[-groups[[i]], ], family = "binomial")
+  pr <- predict(fit, newdata = corisSHF[groups[[i]],])
+  pred.class <- toClass(pr, levels = levels(coris$chd))
+  tt <- table(pred.class, corisSHF$chd[ groups[[i]] ] )
+  acc <- sum(diag(tt)) / sum(tt)
+  return(acc)
+})
+acc_10 <- mean(res_10)
+acc_10
+```
+
+
+### Stepwise backward selection
+
+```{r}
+step_model <- step(full_model, direction = "backward", trace = 0)
+
+matrix(c(rcv_calc(), kfold_rcv_calc(10), rcv_calc(step_model), kfold_rcv_calc(10, step_model)),
+         nrow = 2, byrow = TRUE, dimnames = list(model = c("full" , "step"),
+         accuracy = c("loo", "10-fold")) )
+```
+
+#### Repeat with shuffled dataset for step model k-fold cross validation 
+
+```{r}
+res_10_st <- sapply(1:10, function(i){
+  fit <- glm(formula(step_model), data = corisSHF[-groups[[i]], ], family = "binomial")
+  pr <- predict(fit, newdata = corisSHF[groups[[i]],])
+  pred.class <- toClass(pr, levels = levels(coris$chd))
+  tt <- table(pred.class, corisSHF$chd[ groups[[i]] ] )
+  acc <- sum(diag(tt)) / sum(tt)
+return(acc)
+})
+acc_10_st <- mean(res_10_st)
+acc_10_st
+
+matrix(c(rcv_calc(), acc_10, rcv_calc(step_model), acc_10_st), nrow = 2, byrow = TRUE,
+dimnames = list(model = c("full", "step"), accuracy = c("loo     ", "10-fold SHF")))
+```
+
+We can observe that the simpler model obtained with backward stepwise selection based on AIC, generalize better, that is has a better accuracy over unseen observations.
+
+## Ex 1.2 Implement stepwise forward selection using accuracy estimated with 5fold cross-validation to score the candidate models.
+
+### RCV stepwise selection by my kfold function
+
+```{r}
+# (Exercise 3.1 there is a function for the step using AIC)
+fit <- glm(chd ~ 1, family = binomial, data = coris) # we need a model with only the intercept
+regressors <- colnames(coris)[-10] # we select the regressors
+selected <- c()
+score <- kfold_rcv_calc(5, fit) 
+score.best <- score
+done <- FALSE   
+# continue to add regressors until there is not decrease in AIC (done = TRUE)
+while (!done){                     
+# for regressors in regressors list exept the regressors already used 
+  for (reg in regressors[!(regressors %in% selected)]){ 
+    # update the fit model adding one regressor each time
+    tmp <- update(fit, formula = paste(". ~ . + ", reg)) 
+    # calculate accuracy by Kf-CV
+    score.tmp <- kfold_rcv_calc(5, tmp)
+    # if accuracy is larger than this is the best score
+    if (score.tmp > score.best){
+      # change the best score in to this one (store it outside the for loop)
+      score.best <- score.tmp
+      # store the updated model that just give the best score
+      best <- tmp
+      # store the selected parameters
+      selected.best <- c(selected, reg)
+    }
+  }
+  # when the for loop finish, if score.best > score 
+  if (score.best > score){
+    fit <- best                # store best model to fit
+    score <- score.best        # score best score to score
+    selected <- selected.best  # store select models that score
+  }else{ # if there is no decrease
+  done <- TRUE
+  }
+}
+impl_model <- fit
+impl_model
+
+acc_full <- kfold_rcv_calc(5, full_model) # full model
+acc_step <- kfold_rcv_calc(5, step_model) # step by built in function
+acc_impl <- kfold_rcv_calc(5, impl_model) # my step implemented
+
+data.frame(Accuracy = c(acc_full, acc_step, acc_impl), Models = c("full", "step", "impl"))
+
+matrix(c(acc_full, acc_step, acc_impl), nrow = 3, byrow = TRUE,
+dimnames = list(model = c("full", "step", "impl"), accuracy = "5-fold CV"))
+```
+
+### RCV stepwise selection by Gherardo solutions
+
+```{r}
+# RCV function that perform leave 1 out by default
+crossval <- function(object, data = object$data,    
+                     groups = as.list(1:nrow(data)),  
+                     shuffle = TRUE) {                             
+  if (shuffle) {
+    data <- data[sample(1:nrow(data)),]
+  }
+  class <- as.character(object$formula[[2]])
+  res <- sapply(groups, function(ix) {
+    modello <- glm(formula(object), data = data[-ix,], family = object$family)
+    pr <- predict(modello, newdata = data[ix,]) 
+    pred.class <- toClass(pr, levels = levels(data[[class]]),
+                          linkinv = object$family$linkinv)
+    tt <- table(pred.class, data[[class]][ix])
+    acc <- sum(diag(tt)) / sum(tt)
+    return(acc)
+  })
+  return(mean(res))
+}
+
+# Test the function
+crossval(full_model)
+crossval(full_model, data = corisSHF, groups = groups, shuffle = FALSE)
+```
+
+It seems that it works fine.
+
+```{r}
+# Stepwise selection using the RCV      (Exercise 3.1 there is a function for the step using AIC)
+k <- 5
+r <- floor(n / k)
+groups <- list()
+t <- 0
+s <- 0
+for (i in 1:5) {
+  if (i > 3) {
+    t <- 1
+    if (i > 4) {
+      s <- 1
+    }
+  }
+  groups[[i]] <- ((i - 1) * r + 1 + s):(i * r + t + s)
+}
+### we start the model with only the intercept
+fit <- glm(chd ~ 1, family = "binomial",
+           data = coris) ## only the intercept
+regressors <- colnames(coris)[-10]
+selected <- c()
+score <- crossval(object = fit,
+                  groups = groups,
+                  shuffle = FALSE)
+score.best <- score
+done <- FALSE
+while (!done) {
+  for (reg in regressors[!(regressors %in% selected)]) {
+    tmp <- update(fit, formula = paste(". ~ . + ", reg))
+    score.tmp <- crossval(tmp, groups = groups, shuffle = FALSE)
+    if (score.tmp > score.best) {
+      score.best <- score.tmp
+      best <- tmp
+      selected.best <- c(selected, reg)
+    }
+  }
+  if (score.best > score) {
+    fit <- best
+    score <- score.best
+    selected <- selected.best
+  } else{
+    ### if there is no increase
+    done <- TRUE
+  }
+}
+impl_model2 <- fit
+impl_model2
+
+acc_step <- kfold_rcv_calc(5, step_model) 
+acc_impl <- kfold_rcv_calc(5, impl_model) 
+acc_cv1 <- crossval(full_model, groups = groups, shuffle = FALSE) # full model
+acc_cv2 <- crossval(step_model, groups = groups, shuffle = FALSE) # step by built in function
+acc_cv3 <- crossval(impl_model, groups = groups, shuffle = FALSE) # my step implemented
+acc_cv4 <- crossval(impl_model2, groups = groups, shuffle = FALSE)# Ghe step implemented (use all obs)
+
+data.frame(Accuracy = c(acc_cv1, acc_cv2, acc_cv3, acc_cv4), Models = c("full", "step", "my impl1", "ghe impl2"))
+```
+
+
+# Ex 2 The wine quality dataset
+
+We load both red and white wine datasets and we transform the quality index to a binary good-bad variable.
+
+```{r}
+wines_red <- read.csv("winequality-red.csv", sep =";") 
+wines_white <- read.csv("winequality-white.csv", sep =";")
+
+good <- wines_red$quality > 5 
+wines_red$quality <- "bad"
+wines_red[good, "quality"] <- "good" 
+wines_red[,"quality"] <- as.factor(wines_red[, "quality"]) 
+
+good <- wines_white$quality > 5 
+wines_white$quality <- "bad" 
+wines_white[good, "quality"] <- "good" 
+wines_white[,"quality"] <- as.factor(wines_white[, "quality"])
+```
+
+## Ex 2.1 Fit a logistic regression models using all the predictors and the data for the red wines. Compute the accuracy of the model on the red wines and on the white wines.
+
+```{r}
+redfull <- glm(quality ~ ., family = binomial, data = wines_red)
+whitefull <- glm(quality ~ ., family = binomial, data = wines_white)
+
+pred_rf <- predict(redfull, newdata = wines_red) # exponent of the linkinv
+pred_wf <- predict(whitefull, newdata = wines_white)
+pred_rf_linkinv <- predict(redfull, newdata = wines_red, type = "response") # linkinv
+
+##### CLASSIFIERS METHODS #####
+
+### Method 1)        -> with this setting use exp of the linkinv
+toClass <- function(predictions, levels, linkinv = binomial()$linkinv){
+  a <- linkinv(predictions) > 0.5  # if prob succ > 0.5 => success
+  b <- array(dim = c(length(predictions)))
+  b[a] <- levels[2] # (second lvl)
+  b[!a] <- levels[1] # otherwise not success (first lvl)
+return(factor(b, levels = levels)) # we should return a factor
+}
+
+predclass1_r <- toClass(pred_rf, levels(wines_red$quality)) 
+predclass1_w <- toClass(pred_wf, levels(wines_white$quality)) 
+
+confusion1_r <- table(predclass1_r, wines_red$quality)
+confusion1_w <- table(predclass1_w, wines_white$quality)
+
+acc_red <- sum(diag(confusion1_r)) / sum(confusion1_r)  # accuracy the training set
+paste("accuracy red on training set:  ", acc_red)
+acc_white <- sum(diag(confusion1_w)) / sum(confusion1_w)
+paste("accuracy white on training set:", acc_white)
+
+### Method 2)         -> atm use linkinv
+predclass2 <- factor(sapply(pred_rf_linkinv, function(x)
+    ifelse(x < 0.5, "Bad", "Good")), levels = c("Bad", "Good"))
+confusion2 <- table(predclass2, wines_red$quality)
+
+errs <- sum(confusion2) - sum(diag(confusion2))
+accuracy <- 1 - errs/sum(confusion2)
+accuracy
+
+accuracy <- sum(diag(confusion2)) / sum(confusion2)
+accuracy   
+
+### Method 3)          -> works only with binary 0 1, atm use linkinv
+wines_red[,"quality"] <- as.numeric(wines_red[, "quality"]) 
+wines_red$quality[wines_red$quality == 1] <- 0              
+wines_red$quality[wines_red$quality == 2] <- 1
+
+redfull <- glm(quality ~ ., family = binomial, data = wines_red)
+pred_rf_linkinv <- predict(redfull, newdata = wines_red, type = "response")
+
+pred <- as.numeric(pred_rf_linkinv > 0.5)
+
+# Accuracy calculation 1
+confusion <- table(pred, wines_red$quality)
+accuracy <- sum(diag(confusion2)) / sum(confusion2)
+accuracy   
+
+# Accuracy calculation 2
+correct_pred <- pred == wines_red$quality      
+sum(correct_pred)/nrow(wines_red)
+
+## Change back to factor
+wines_red[,"quality"] <- as.factor(wines_red[, "quality"]) 
+levels(wines_red$quality) <- c("bad", "good") 
+levels(wines_red$quality)
+```
+
+All of the previous method can work with both linkinv or exponent of the linkinv
+
+#### I repeat the measurement with k-fold CV
+
+```{r}
+#### k-fold ALL INCLUSIVE 2 functions
+
+# Calculate groups
+calc_groups <- function(data, key = 10) {
+  k <- key
+  groups <- list()
+  m <- nrow(data) %/% k
+  for (i in 1:k){
+    groups[[i]] <- ((i-1) * m + 1):(i * m)
+  }
+  return(groups)
+}
+
+# Adapted k-fold crossval
+crossval <- function(object, 
+                     data = object$data,      
+                     groups = as.list(1:nrow(data)),
+                     kfold = FALSE,
+                     key = 10,
+                     shuffle = TRUE) {
+  if (kfold) {
+    groups = calc_groups(data, key = 10)
+  }
+  if (shuffle) {
+    data <- data[sample(1:nrow(data)),]
+  }
+  class <- as.character(object$formula[[2]])
+  res <- sapply(groups, function(ix) {
+    modello <- glm(formula(object), data = data[-ix,], family = object$family)
+    pr <- predict(modello, newdata = data[ix,]) 
+    pred.class <- toClass(pr, levels = levels(data[[class]]),
+                          linkinv = object$family$linkinv)
+    tt <- table(pred.class, data[[class]][ix])
+    acc <- sum(diag(tt)) / sum(tt)
+    return(acc)
+  })
+  return(mean(res))
+}
+# perform leave 1 out (shuffle has no effect)
+crossval(object = redfull, data = wines_red)
+# perform k-fold, can specify fold size
+crossval(object = redfull, data = wines_red, kfold = TRUE, key = 5)
+# perform k-fold, use the same group
+crossval(object = redfull, data = wines_red, kfold = TRUE, shuffle = FALSE)
+
+## Calculate accuracy
+crossval(object = redfull, data = wines_red, kfold = TRUE)
+crossval(object = whitefull, data = wines_white, kfold = TRUE)
+```
+
+# 2.2 Fit a logistic regression model using the white wines data and compute the accuracy over the white and red wines.
+
+
+```{r}
+# Function to calculate accuracy
+calc_acc <- function(object, data = object$data){
+  pred <- predict(object, newdata = data) # exponent of the linkinv
+  pred.class <- toClass(pred, levels(data$quality)) 
+  confusion <- table(pred.class, data$quality)
+  acc <- sum(diag(confusion)) / sum(confusion) 
+  return(acc)
+}
+
+acc_r.w_full <- calc_acc(redfull, wines_white)
+paste("accuracy red model on white dataset:", acc_r.w_full)
+acc_w.r_full <- calc_acc(whitefull, wines_red)
+paste("accuracy white model on red dataset:", acc_w.r_full)
+
+# cross validation daens't make sense if I'm not using the model on the dataset that I use to train it
+```
+
+```{r}
+summary(redfull)
+summary(whitefull)
+```
+
+It could be usefull since they have some relevant covariates in common, but some other covariates that are important for the red wines, are irrelevant for the white wines.
+
+# Exercise 3
+
+## 3.1 Use now both red and white wines data and perform stepwise forward selection with AIC to select a logistic regression model for the binary quality variable.
+
+```{r}
+# Stepwise selection using the AIC
+step_selection.aic <- function(data){ 
+  fit <- glm(quality ~ 1, family = "binomial",
+             data = data) ## only the intercept
+  regressors <- colnames(data)[-12]   
+  selected <- c()
+  score <- AIC(fit)
+  score.best <- score
+  done <- FALSE
+  while (!done) {
+    for (reg in regressors[!(regressors %in% selected)]) {
+      tmp <- update(fit, formula = paste(". ~ . + ", reg))
+      score.tmp <- AIC(tmp)
+      if (score.tmp < score.best) {
+        score.best <- score.tmp
+        best <- tmp
+        selected.best <- c(selected, reg)
+      }
+    }
+    if (score.best < score) {
+      fit <- best
+      score <- score.best
+      selected <- selected.best
+    } else{
+      ### if there is no increase
+      done <- TRUE
+    }
+  }
+  return(fit)
+}
+red_step <- step_selection.aic(wines_red)
+red_step
+white_step <- step_selection.aic(wines_white)
+white_step
+```
+
+Ex 3.2 Estimate the accuracy of the model using 10-fold cross validation on the red and white wines data.
+
+```{r}
+# The function perform kfold and can test the model to a different dataset 
+# -> it is the same of crossval but daesn't perform leave 1 out
+kfold_10_step <- function(object, data = object$data, shuffle = TRUE, groups = 10){
+  if (shuffle){
+    data = data[sample(1:nrow(data)),]
+  }
+  groups = calc_groups(data, groups)
+  acc_10 <- sapply(1:10, function(i){
+    fit <- glm(formula(object), 
+               data = data[-groups[[i]], ], family = "binomial")
+    pr <- predict(fit, newdata = data[groups[[i]],])
+    pred.class <- toClass(pr, levels = levels(data$quality))
+    tt <- table(pred.class, data$quality[ groups[[i]] ] )
+    acc <- sum(diag(tt)) / sum(tt)
+    return(acc)
+  })
+  return(mean(acc_10))
+}
+
+kfold_10_step(red_step, wines_red)
+kfold_10_step(white_step, wines_white)
+
+kfold_10_step(red_step, wines_white)
+kfold_10_step(white_step, wines_red)
+
+```
+
+# Ex 3.3 We want now to estimate the accuracy of the models trained both on red and white wines only over the red wines
+
+```{r}
+# Function that take a dataset return a training set and a target set
+train_target_gen <- function(data, n){
+  i <- sample(1:1599, size = n, replace = FALSE)
+  train <- data[-i,]
+  target <- data[i,]
+  return(list(train = train, target = target))                                     
+}                                                         
+
+# Without function
+accuracy_200 <- function(){
+  i <- sample(1:1599, size = 200, replace = FALSE)
+  
+  red_train <- wines_red[-i,]
+  white_train <- wines_white[-i,]
+  all_train <- rbind(red_train, white_train)
+  
+  red_target <- wines_red[i,]
+  red_step_rnd <- step_selection(all_train)
+  acc_red <- calc_acc(object = red_step_rnd, data = all_train)
+  print("..loading..")
+  return(acc_red)
+}
+
+acc_rnd <- replicate(50, accuracy_200())                
+acc_rnd_mean <- mean(acc_rnd) 
+acc_rnd_mean
+```
+

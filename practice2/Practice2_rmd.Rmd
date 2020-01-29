@@ -1,0 +1,353 @@
+---
+title: "Practice 2"
+author: "Stefano Pellegrini"
+date: "1/14/2020"
+output: pdf_document
+---
+
+```{r load myData, include=FALSE}
+load("exam.RData")
+```
+
+# Problem 1
+
+## Ex 1.1 Compute the mean tooth length for all six combinations of supplement types and levels. Also provide the standard error of the mean for each situation.
+
+```{r}
+head(ToothGrowth)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+
+dose_0.5 <- ToothGrowth$dose == 0.5
+dose_1.0 <- ToothGrowth$dose == 1.0
+dose_2.0 <- ToothGrowth$dose == 2.0
+
+supp_vc <- ToothGrowth$supp == "VC"
+supp_oj <- ToothGrowth$supp == "OJ"
+
+# supp VC
+supp_0.5vc <- supp_vc & dose_0.5
+supp_1.0vc <- supp_vc & dose_1.0
+supp_2.0vc <- supp_vc & dose_2.0
+# supp OJ
+supp_0.5oj <- supp_oj & dose_0.5
+supp_1.0oj <- supp_oj & dose_1.0
+supp_2.0oj <- supp_oj & dose_2.0
+
+# Split the dataframes
+supp_0.5vc_df <- ToothGrowth[supp_0.5vc,]
+supp_1.0vc_df <- ToothGrowth[supp_1.0vc,]
+supp_2.0vc_df <- ToothGrowth[supp_2.0vc,]
+
+supp_0.5oj_df <- ToothGrowth[supp_0.5oj,]
+supp_1.0oj_df <- ToothGrowth[supp_1.0oj,]
+supp_2.0oj_df <- ToothGrowth[supp_2.0oj,]
+
+# list of df
+list.df <- list(supp_0.5vc_df, supp_1.0vc_df, supp_2.0vc_df, 
+             supp_0.5oj_df, supp_1.0oj_df, supp_2.0oj_df)
+# get mean
+mean.len <- sapply(list.df, function(x) mean(x$len))
+# get se mean              # standard error of the mean = standard deviation of len / sqrt (n.data)
+sd.len <- sapply(list.df, function(x) sd(x$len) / sqrt(nrow(x)))
+
+data.frame(combinations = c("0.5 VC", "1 VC", "2 VC", 
+                            "0.5 OJ", "1 OJ", "2 OJ"), 
+           mean_len = mean.len, 
+           mean_se = sd.len)
+
+# or from Gherardo solution
+combinations <- expand.grid(supp = levels(ToothGrowth$supp), dose = levels(ToothGrowth$dose))
+
+temp <- apply(combinations, MARGIN = 1, function(x){ 
+  ix <- ToothGrowth$supp == x[1] & ToothGrowth$dose == x[2]
+return( c(mean = mean(ToothGrowth[ix, 1]), se = sd(ToothGrowth[ix, 1]) / sqrt(sum(ix) )))
+} )
+
+means <- cbind(combinations, t(temp) )
+means
+```
+
+# Ex 1.2 We will investigate whether diﬀerent dose levels have the same eﬀect. Perform 0.05-level two sample t-tests with unequal variances to check whether to reject the following null hypotheses, and explain the result for each hypothesis: 
+
+```{r}
+t.test(supp_0.5oj_df$len, supp_1.0oj_df$len, var.equal = FALSE)
+
+# or from gherardo
+t.test(x = ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == "0.5", 1],
+y = ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == "1", 1], var.equal = FALSE )
+```
+
+
+# Problem 3
+
+## Ex 3.1 Implement an R function for the PDF of the Gaussian mixture distribution, Plot the PDF of GM(2,1,5,1,0.3). 
+
+```{r}
+dgaussmix <- function(x, mean1, sd1, mean2, sd2, w){
+  stopifnot(w <= 1 && w >= 0)
+  stopifnot(sd1 > 0 && sd2 > 0)
+  w * dnorm(x, mean1, sd1) + (1 - w) * dnorm(x, mean2, sd2)
+}
+curve(dgaussmix(x, 2, 1, 5, 1, 0.3), from = -5, to = 10, main = "GM(2,1,5,1, 0.3)", ylab = "density")
+```
+
+## Ex 3.2 Estimate the ﬁve parameters of the Gaussian mixture using the 1000 observed longitude values. You can done this numerically in R with the optim function. Plot the ﬁtted Gaussian mixture on top of the histogram of the longitude data.
+
+To obtain initial guess for the parameter of the Gaussian mixture for the longitude locations we plot the histogram
+
+```{r}
+hist(quakes$long, probability = TRUE, breaks = "FD")
+```
+
+We can divide the longitude location observations in two groups, before and after 175.
+
+```{r}
+before <- quakes$long[quakes$long < 175]
+after <- quakes$long[quakes$long > 175]
+```
+
+
+We can now consider the following initial estimate for the Gaussian mixture:
+
+```{r}
+m1.init <- mean(before)        # Or just look at the histogram and try to think what the values of
+sd1.init <- sd(before)         # the parameters can be
+m2.init <- mean(after)
+sd2.init <- sd(after)
+w.init <- length(before) / length(after)
+par.init <- c(m1.init, sd1.init, m2.init, sd2.init, w.init)
+par.init
+```
+
+
+We define now the minus log-likelihood and then start the optimization
+
+```{r}
+gaussmix_mll <- function(par, data){
+  if (par[5] > 1 || par[5] < 0 ){
+    return(Inf)                         # why return inf?
+  }
+  if (par[2] < 0 || par[4] < 0){
+    return(Inf)
+  }
+  -sum(log(dgaussmix(x = data, mean1 = par[1], sd1 = par[2], 
+              mean2 = par[3], sd2 = par[4], w = par[5])))
+}
+par.est_gaussmix <- optim(f = gaussmix_mll, par = par.init, data = quakes$long)$par
+par.est_gaussmix
+```
+
+I plot the density with estimated parameters.
+
+```{r}
+hist(quakes$long, probability = TRUE, breaks = "FD")
+curve(dgaussmix(x, par.est_gaussmix[1], par.est_gaussmix[2], 
+      par.est_gaussmix[3], par.est_gaussmix[4], par.est_gaussmix[5]), add = TRUE, col = "red")
+```
+
+
+
+## Ex 3.3 Consider now another model where the longitude locations are i.i.d. Gaussian distributed.
+
+```{r}
+# Methods of moments
+mu = mean(quakes$long)
+sigma = sd(quakes$long)
+
+# Minus log likelihood
+gauss_mll <- function(par, data){
+  -sum(dnorm(x = data, mean = par[1], sd = par[2]))
+} 
+
+par.est_gauss <- optim(f = gauss_mll, par = c(mu, sigma),          # optim daesn't work in this the
+                 data = quakes$long, control = list(maxit = 10000))# pars estimated by moments m.
+```
+
+```{r}
+hist(quakes$long, probability = TRUE, breaks = "FD")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "red")
+```
+
+## Ex 3.4 Compute the AIC and BIC values for the simple Gaussian model and the Gaussian mixture model for the longitude data. Which model should be selected?
+
+
+```{r}
+mll.mixture <- gaussmix_mll(data = quakes$long, par = par.est_gaussmix)
+mll.gauss <- (-sum(dnorm(x = quakes$long, mean = mu, sd = sigma, log = TRUE)))
+
+# AIC
+aic.mixture <- 2 * mll.mixture + 2 * length(par.est)
+aic.gauss <- 2 * mll.gauss + 2 * 2
+c(aic.mixture, aic.gauss)
+
+# BIC
+n <- nrow(quakes)
+bic.mixture <- 2 * mll.mixture + length(par.est) * log(n)
+bic.gauss <- 2 * mll.gauss + 2 * log(n)
+c(mixture = bic.mixture, gauss = bic.gauss)
+```
+
+BIC and AIC scores indicates that the mixture model should be selected.
+
+## Ex 3.5 Repeat the above ﬁtting procedure for the latitude and the depth data, and perform as usual model selection using AIC and BIC, which model should be used? 
+
+### Latitude data fit
+
+```{r}
+hist(quakes$lat, probability = TRUE, breaks = "FD")
+```
+
+```{r}
+# Parameters mixture
+par.lat <- optim(par = c(-32, 7, -20, 7, 0.5), fn = gaussmix_mll, data = quakes$lat)$par
+
+# Parameters gauss
+mu.lat <- mean(quakes$lat)
+sigma.lat <- sd(quakes$lat)
+
+hist(quakes$lat, probability = TRUE, breaks = "FD")
+curve(dgaussmix(x, par.lat[1], par.lat[2], par.lat[3], par.lat[4], par.lat[5]), 
+                add = TRUE, col = "red")
+curve(dnorm(x, mean = mu.lat, sd = sigma.lat), col = "blue", add = TRUE)
+legend("topleft", legend = c("mixture", "gaussian"), col = c("red", "blue"), lty = 1)
+```
+
+```{r}
+mll.mixture = gaussmix_mll(par.lat, data = quakes$lat)
+mll.gauss = -sum(dnorm(quakes$lat, mu.lat, sigma.lat, log = TRUE))
+
+# AIC
+aic.mixture <- 2 * mll.mixture + 2 * length(par.lat)
+aic.gauss <- 2 * mll.gauss + 2 * 2
+c(mixture = aic.mixture, gauss = aic.gauss)
+
+# BIC
+n = nrow(quakes)
+bic.mixture <- 2 * mll.mixture + length(par.lat) * log(n)
+bic.gauss <- 2 * mll.gauss + 2 * log(n)
+c(mixture = bic.mixture, gauss = bic.gauss)
+```
+
+The mixture model is to prefer (AIC and BIC).
+
+### Latitude data fit
+
+```{r}
+hist(quakes$depth, probability = TRUE, breaks = 30)
+```
+
+
+```{r}
+# Parameters mixture
+par.depth <- optim(par = c(110, 100, 600, 100, 0.5), fn = gaussmix_mll, data = quakes$depth)$par
+
+# Parameters gauss
+mu.depth <- mean(quakes$depth)
+sigma.depth <- sd(quakes$depth)
+
+hist(quakes$depth, probability = TRUE, breaks = 30)
+curve(dgaussmix(x, par.depth[1], par.depth[2], par.depth[3], par.depth[4], par.depth[5]), 
+                add = TRUE, col = "red")
+curve(dnorm(x, mean = mu.depth, sd = sigma.depth), col = "blue", add = TRUE)
+legend("topleft", legend = c("mixture", "gaussian"), col = c("red", "blue"), lty = 1)
+```
+
+```{r}
+mll.mixture = gaussmix_mll(par.depth, data = quakes$depth)
+mll.gauss = -sum(dnorm(quakes$depth, mu.depth, sigma.depth, log = TRUE))
+
+# AIC
+aic.mixture <- 2 * mll.mixture + 2 * length(par.depth)
+aic.gauss <- 2 * mll.gauss + 2 * 2
+c(mixture = aic.mixture, gauss = aic.gauss)
+
+# BIC
+n = nrow(quakes)
+bic.mixture <- 2 * mll.mixture + length(par.lat) * log(n)
+bic.gauss <- 2 * mll.gauss + 2 * log(n)
+c(mixture = bic.mixture, gauss = bic.gauss)
+```
+
+## 3.6 In this question we consider a generalized linear model with the log link and stations follows a Gaussian distribution.
+
+```{r}
+fit1 <- glm(stations ~ ., data = quakes, family = gaussian(link = "log"))
+summary(fit1)
+```
+
+```{r}
+fit2 <- glm(stations ~ . + I(mag^2), data = quakes, family = gaussian(link = "log"))
+summary(fit2)
+```
+
+```{r}
+fit3 <- glm(stations ~ . + I(mag^2), data = quakes, family = gaussian(link = "log"))
+summary(fit2)
+```
+
+```{r}
+fit3 <- glm(stations ~ lat + long + depth + exp(mag) + 
+              I(exp(mag)^2), data = quakes, family = gaussian(link = "log"))
+summary(fit3)
+
+```
+
+## Ex 3.7 Perform the log likelihood ratio test selection between model 1 and model 2.
+
+```{r}
+anova(fit1, fit2, test = "LRT")
+```
+
+The p-value is very small and we thus reject the null hypothesis (e.g. at a level 0.0005) that the simpler model fit1 is sufficient.
+
+### Use instead AIC and BIC to perform model selection between model 1, model 2 and model 3.
+
+```{r}
+models <- list(fit1 = fit1, fit2 = fit2, fit3 = fit3)
+sapply(models, function(m){
+  c(AIC = AIC(m), BIC = BIC(m))
+})
+
+AIC(fit1, fit2, fit3)
+BIC(fit1, fit2, fit3)
+```
+
+Model 2 is selected by both AIC and BIC.
+
+## 3.8  Fit the Poisson regression models with the log link function.
+
+```{r}
+fit4 <- glm(stations ~ ., data = quakes, family = poisson(link = "log"))
+summary(fit4)
+
+fit5 <- glm(stations ~ . + I(mag^2), data = quakes, 
+            family = poisson(link = "log"))
+summary(fit5)
+
+fit6 <- glm(stations ~ lat + long + depth + exp(mag) + I(exp(mag)^2), 
+            data = quakes, family = poisson(link = "log"))
+summary(fit6)
+```
+
+Perform model selection between model 4 and model 5 using the anova function. Perform model selection
+between the three Poisson regression models using AIC and BIC.
+
+```{r}
+anova(fit4, fit5, test = "LRT")
+
+models <- list(fit4 = fit4, fit5 = fit5, fit6 = fit6) 
+sapply(models, function(m){
+  c(AIC = AIC(m), BIC = BIC(m))
+})
+```
+
+Model 5 (fit5) is selected by both AIC and BIC.
+
+```{r}
+fit7 <- glm(stations ~ . + I(mag^2), data = quakes, family = Gamma(link = "inverse" ))
+summary(fit7)
+?family
+```
+
+
+
