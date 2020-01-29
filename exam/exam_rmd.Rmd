@@ -1,5 +1,7 @@
 ---
-title: "Final exam"
+title: "Exam"
+author: 
+date: "1/15/2020"
 output: pdf_document
 ---
 ```{r load myData, include=FALSE}
