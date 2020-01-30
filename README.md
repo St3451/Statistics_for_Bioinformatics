@@ -1,4 +1,4 @@
-# Statistics for Bioinformatics
+# Statistics for Bioinformatics and eScience
 
 This course, together with Structural Bioinformatics, makes up the second block of my MSc in Bioinformatics.
 
