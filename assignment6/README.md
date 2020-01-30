@@ -1,5 +1,8 @@
 ## Week 6 assignment
 
-__assignment6__ (pdf or rmd) for solved exercises.
+* <code>assignment6</code> (pdf or rmd) for solved exercises.
 
-__questions6__ for assignment questions.
+* <code>questions6</code> for assignment questions.
+
+* <code>solutions6</code> for solutions provided by the professor.
+

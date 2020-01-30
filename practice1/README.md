@@ -1,5 +1,7 @@
 ## Practice exam 1
 
-__practice1__ (pdf or rmd) for solved exercises.
+* <code>practice1</code> (pdf or rmd) for solved exercises.
 
-__questions_p1__ for practice exam questions. 
+* <code>questions_p1</code> for practice exam questions. 
+
+* <code>solutions_p1</code> for solutions provided by the professor.
