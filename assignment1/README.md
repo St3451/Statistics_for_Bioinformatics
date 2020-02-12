@@ -1,6 +1,6 @@
 ## Week 1 assignment
 
-* <code>assignment1</code> (pdf or rmd) for solved exercises.
+* <code>handin1</code> (pdf or rmd) for solved exercises.
 
 * <code>questions1</code> for assignment questions.
 
