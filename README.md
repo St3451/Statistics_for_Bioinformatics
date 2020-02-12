@@ -12,32 +12,32 @@ Each folder contains an rmd (i.e. <code>handin.rmd</code>) and a pdf file (i.e. 
 
 ### Assignment 1
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/questions1.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/handin1.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/handin1.rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/solutions1.pdf)
 
 ### Assignment 2
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/questions2.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/assignment2.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/assignment2.rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/handin2.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/handin2.rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment2/solutions2.pdf)
   
 ### Assignment 3
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/questions3.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/assignment3.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/assignment3.rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/handin3.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/handin3.rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment3/solutions3.pdf)
   
 ### Assignment 4
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/questions4.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/assignment4.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/assignment4.Rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/handin4.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/handin4.Rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment4/solutions4.pdf)
   
 ### Assignment 5
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/questions5.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/assignment5.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/assignment5.Rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/handin5.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/handin5.Rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment5/solutions5.pdf)
   
 ### Assignment 6
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/questions6.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/assignment6.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/assignment6.Rmd)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/handin6.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/handin6.Rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment6/solutions6.pdf)
   
 ### Practice exam 1
