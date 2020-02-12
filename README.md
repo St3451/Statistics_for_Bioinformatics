@@ -12,7 +12,7 @@ Each folder contains an rmd (i.e. <code>handin.rmd</code>) and a pdf file (i.e. 
 
 ### Assignment 1
   * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/questions1.pdf)
-  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.rmd) for solved exercises
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.rmd)
   * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/solutions1.pdf)
 
 ### Assignment 2
