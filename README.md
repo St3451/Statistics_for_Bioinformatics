@@ -11,46 +11,46 @@ Each folder contains an rmd (i.e. <code>handin.rmd</code>) and a pdf file (i.e. 
 ## Exercises
 
 ### Assignment 1
-  * [Questions]
-  * [Handin]
-  * [Solutions]
+  * [Questions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/questions1.pdf)
+  * [Handin.pdf](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.pdf) or [Handin.rmd](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/assignment1.rmd) for solved exercises
+  * [Solutions](https://github.com/St3451/Statistics_for_Bioinformatics/blob/master/assignment1/solutions1.pdf)
 
 ### Assignment 2
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.rmd]
   * [Solutions]
   
 ### Assignment 3
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.rmd]
   * [Solutions]
   
 ### Assignment 4
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
   
 ### Assignment 5
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
   
 ### Assignment 6
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
   
 ### Assignment 7
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
   
 ### Practice exam
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
 
 ### Final exam
   * [Questions]
-  * [Handin]
+  * [Handin.pdf] or [Handin.pdf]
   * [Solutions]
